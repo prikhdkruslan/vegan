@@ -337,18 +337,21 @@ function updateAmount() {
         return typeof(prop) !== 'object' ? false : typeof prop[0] === 'number'
       }
 
+      
       for(var key in stock) {
         if(stock.hasOwnProperty(key)) {
+          var old = accStock[key]
           accStock[key] =  isSumable(accStock[key]) ? ([accStock[key][0] + stock[key][0],stock[key][1]]) : stock[key]
+          // console.log(key, 'old: ' + old, ' --- new: ' + accStock[key])
         }
-      }
-      selected.push(accStock)      
+      }              
     }     
 
       dummy = '(' + dummy.substr(3) + ')'            
       $amount.text(dummy)
       
       //$result.html(stockFacts(stock, amount))  
+      selected.push(accStock)    
   })
   
    
@@ -357,7 +360,7 @@ function updateAmount() {
   if (!selected[0] || !selected[1]) return
   var difference = {};
   var diff = {}
-
+  
   Object.keys(selected[0]).forEach(function (k) {    
     if (/^(key|name|servingUnit|unitsPerServing|group|icon)$/.test(k)) return   
   
@@ -367,6 +370,8 @@ function updateAmount() {
     second[0] *= selected[1].unitsPerServing
     difference[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? 'save' : 'use'];
     diff[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? ' + ' : ' - ']
+
+    // console.log('%c key, val1, val2', 'color:blue', k, first,second, diff[k])
   })
 
   //$comparisonResult.html(stockFacts(diff, quantity));

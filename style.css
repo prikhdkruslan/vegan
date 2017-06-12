@@ -35,6 +35,30 @@ body{
   font-size: 17px;
 }
 
+.navbar.navbar-light a {
+  color: white!important;
+}
+
+.navbar.navbar-light li:hover>a {
+  color: #4183c4!important;
+}
+
+.nav.navbar-nav li.active:hover>a {
+  color: white!important;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: #173;
+}
+
+button.navbar-toggle.collapsed span.icon-bar {
+  background-color: white;
+}
+
+button.navbar-toggle span.icon-bar {
+  background-color:  #4183c4;
+}
+
 /* Change the color of links on hover */
 .topnav a:hover {
   background-color: #ddd;
