@@ -1,0 +1,16 @@
+This is my code: https://codepen.io/ronenshoaht/pen/XMORzM 
+
+As you can see, it's a simple calculator that compares values between different food items. The main things I'm looking to fix/add:
+
+1. Using Semantic UI multi-select dropdowns. For some reason the syntax to input array values into the dropdowns works for other functions but not mine. Example: https://codepen.io/ronenshoaht/pen/mwVbBZ 
+
+My overall goal with using the Semantic UI would be having the user be able to input various food items so that they can compare ingredients, meals, or even their daily diets, and include icons for items. Something like: https://semantic-ui.com/modules/dropdown.html#multiple-search-selection but if you have a better idea I'm all ears. 
+
+2. Changing the signs/wording for "meals you're able to make/people you can feed". As you can see it logically needs to be reversed, but I don't know how to add that functionality to the code.
+
+3. Rounding issues. It doesn't seem to be perfectly ready yet- when inputting various items and changing value amounts, you can see that sometimes there are issues with rounding that sometimes don't make sense. This especially happens when the difference is 0- if that happens I think it would be better to either say "no difference" or just leave the fields blank.
+
+4. Finally as you can see, there hasn't been as much time dedicated to making proper CSS formats so that it's mobile compatible. Could also use a bit of freshening up to look more official/fancy if you know what I mean.
+
+
+These all seem like pretty simple fixes to me that shouldn't take much time for an experienced developer, but are seemingly impossible to a coding noob like me. Let me know what you think- thanks

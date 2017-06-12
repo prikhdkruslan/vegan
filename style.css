@@ -1,0 +1,152 @@
+.main-container{ 
+  display: flex; 
+  flex-wrap: wrap;
+  margin: 15px 7%;
+}
+
+*{
+  padding : 0;
+  margin : 0;
+}
+body{
+  height : 100vh;
+  background-color: #F8F8FF;  
+}
+
+.topnav {
+  height: 50px;
+  width: 100%;
+  color: white;
+  background-color: #173;
+  overflow: hidden;
+  text-align: center;
+  
+}
+
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.box-1{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 50px;
+}
+
+.box{
+  width : 22%;
+  display : block;
+  text-align : center;
+  font-size : 1.5em;
+}
+
+.box-2{
+  width : 48%;
+  margin-top: 1%;
+  display : block;
+  text-align : center;
+  font-size : 1.5em;
+}
+
+
+
+@media screen and (max-width: 480px) {
+  .box{
+    display : block;
+    width : auto;
+  }
+
+  .box-2{
+    display : block;
+    width : auto;
+  }
+}
+
+.color-red{
+  color:red;
+  background:transparent}
+  .color-green{
+  color:green;
+  background:transparent}
+
+#share-buttons img {
+  width: 35px;
+  padding: 5px;
+  border: 0;
+  box-shadow: 0;
+  display: inline;
+  background: transparent;
+}
+ 
+/* Hide AddToAny vertical share bar when screen is less than 980 pixels wide */
+@media screen and (max-width: 980px) {
+    .a2a_floating_style.a2a_vertical_style { display: none; }
+}
+
+
+i.ingredient:not(.icon) {
+    display: inline-block;
+    width: 16px;
+    height: 13px;
+    line-height: 13px;
+    vertical-align: baseline;
+    margin: 0 1em 0 0;
+    text-decoration: inherit;
+    speak: none;
+    font-smoothing: antialiased;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;    
+}
+
+i.ingredient:not(.icon):before {
+    display: inline;
+    content: '';
+    background: url(images/ingredients.jpg) no-repeat -150px -150px;
+    width: 25px;
+    border-radius: 15px;
+    height: 25px;    
+    position: absolute;
+    top: 6px;
+}
+
+i.ingredient.bf1:before {
+    background-position: -2px 2px;
+}
+
+i.ingredient.bf2:before{
+    background-position: -35px 2px;
+}
+i.ingredient.ch1:before{
+    background-position: 2px -13px;
+}
+i.ingredient.ch2:before{
+    background-position: -2px -31px;
+}
+
+
+.ui.multiple.selection.dropdown .menu.sub {
+  overflow-x: visible!important;
+  overflow-y: visible!important;
+}
