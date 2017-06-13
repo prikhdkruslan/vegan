@@ -172,5 +172,9 @@ i.ingredient.ch2:before{
 
 .ui.multiple.selection.dropdown .menu.sub {
   overflow-x: visible!important;
-  overflow-y: visible!important;
+  overflow-y: auto;
+}
+
+.ui.segment {
+  margin-top: 10px!important;  
 }

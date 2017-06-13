@@ -49,12 +49,12 @@
 //   ["Soda","fl oz",10.64647779,0.02494335117,13,0,0.08,3.05,0,1,0,0,0,0,0.1939638153,0.2582470824,12  ]
 // ]
 
-var  stocks= [
-  ["Beef (80/20) raw","oz",115.4451262,3.293742347,72,4.85,5.65,0,2.142,19,20,0.0001275510204,0.375,0.75,22.15988372,0.3768292943,4, "beef", "bf1"  ],
-  ["Beef (90/10) raw","oz",115.4451262,3.293742347,50,5.65,2.83,0,1.109,19,18,0.0001275510204,0.375,0.75,22.15988372,0.3768292943,4, , "bf2"  ],
-  ["Chicken breast","oz",32.39053977,0.3923520408,34,6.38,0.74,0,0.16,13,21,0.01631172356,0.10625,0.2125,3.149953226,0.3765300698,4, "chicken", "ch1"  ],
-  ["Chicken thighs/legs","oz",32.39053977,0.3923520408,125,2.72,12.54,0,3.431,14,30,0.01631172356,0.10625,0.2125,3.149953226,0.3765799405,4, "", "ch2"  ],  
-]
+// var  stocks= [
+//   ["Beef (80/20) raw","oz",115.4451262,3.293742347,72,4.85,5.65,0,2.142,19,20,0.0001275510204,0.375,0.75,22.15988372,0.3768292943,4, "beef", "bf1"  ],
+//   ["Beef (90/10) raw","oz",115.4451262,3.293742347,50,5.65,2.83,0,1.109,19,18,0.0001275510204,0.375,0.75,22.15988372,0.3768292943,4, , "bf2"  ],
+//   ["Chicken breast","oz",32.39053977,0.3923520408,34,6.38,0.74,0,0.16,13,21,0.01631172356,0.10625,0.2125,3.149953226,0.3765300698,4, "chicken", "ch1"  ],
+//   ["Chicken thighs/legs","oz",32.39053977,0.3923520408,125,2.72,12.54,0,3.431,14,30,0.01631172356,0.10625,0.2125,3.149953226,0.3765799405,4, "", "ch2"  ],  
+// ]
 
 function Stock (data, i) {
   return {
@@ -133,7 +133,7 @@ function format(data, multiplier, digits,a,b,unit) {
 function Row(val, desc) {
 var td = `
       <tr>
-        <td class="collapsing">
+        <td class="collapsing" style="white-space: nowrap;">
           ${val}  
         </td>
         <td class="collapsing">
@@ -353,11 +353,19 @@ function updateAmount() {
       //$result.html(stockFacts(stock, amount))  
       selected.push(accStock)    
   })
-  
-   
+      
   //$comparisonResult.empty()
-  
-  if (!selected[0] || !selected[1]) return
+  if (!selected[0] || !selected[1]) {
+
+    toggleSegmentHideMe(true)
+    //$comparisonResult.html(stockFacts(diff, quantity));
+    $('#env_result').html('');
+    $('#health_result').html('');
+    $('#soc_result').html('');
+    $('#year_result').html('');
+    $('#US_result').html('');      
+    return
+  }
   var difference = {};
   var diff = {}
   
@@ -374,6 +382,7 @@ function updateAmount() {
     // console.log('%c key, val1, val2', 'color:blue', k, first,second, diff[k])
   })
 
+  toggleSegmentHideMe(false)
   //$comparisonResult.html(stockFacts(diff, quantity));
   $('#env_result').html(stockFactsEnv(diff, quantity));
   $('#health_result').html(stockFactsHealth(diff, quantity));
@@ -393,7 +402,10 @@ var groups = ((s)=> {
 })(stocks)
 
 function SubMenu(opt, id) {
-var sub = `<div class="item" data-value="${opt.key}"><i data-id=${id} class="${opt.icon} ingredient"></i>${opt.name}</div>`
+//var sub = `<div class="item" data-value="${opt.key}"><i data-id=${id} class="${opt.icon} ingredient"></i>${opt.name}</div>`
+var sub = `<div class="item" data-value="${opt.key}">
+  <i data-id=${id} class=""><img src="${opt.icon}" width="20px" height="20px"></i>
+  ${opt.name}</div>`
 return sub
 }
 
@@ -409,7 +421,7 @@ function SubMenus(grp, id) {
   menus.forEach((m, i)=> {
     temp.push(SubMenu(m, id))
   })
-  return temp.join()
+  return temp.join(' ')
 }
 
 function SubDropDown(grp, id) {
@@ -423,6 +435,18 @@ function SubDropDown(grp, id) {
   return t
 }
 
+function GroupMenu(grp, id) {
+  var group = 
+    `<div class="divider"></div>
+    <div class="header">
+      <i class="tags icon"></i>
+      ${grp}
+    </div>    
+      ${SubMenus(grp, id)}
+    `    
+  return group
+}
+
 function DropDown(id) {      
   var temp = [],
       text = 'Pick a food!'
@@ -430,16 +454,17 @@ function DropDown(id) {
     if(grp.length == 0) {
       temp.push(SubMenus(grp, id))
     } else {
-      temp.push(SubDropDown(grp, id))
+      //temp.push(SubDropDown(grp, id))
+      temp.push(GroupMenu(grp, id))
     }    
   })
 
   var template = `
-  <div class="ui multiple selection dropdown">    
+  <div class="ui multiple search selection dropdown">    
     <i class="dropdown icon"></i>
     <div class="default text">${text}</div>
     <div class="menu sub">
-      ${temp.join()}
+      ${temp.join(' ')}
     </div>
   </div>
   `    
@@ -455,11 +480,12 @@ $('.stockSelect').each((i, elm)=> {
 $('.ui.dropdown').dropdown({
   onChange: (list, val,text)=> {
     list = list || ""
-    var id = $(text).data('id')        
+    var id = $(val).data('id') || $(text).data('id')        
+    console.log(list, 'id:' + id, 'val: ' + val, text)
     if(id === 's1') {
-      app.one = list.split(',')
+      app.one = list.split(',').filter((i)=>i)
     } else {
-      app.two = list.split(',')
+      app.two = list.split(',').filter((i)=>i)
     }        
     updateAmount();
   }
@@ -469,3 +495,20 @@ $quantity.on('input', updateAmount)
 
 //global var
 var app = {one:[], two:[]};
+
+function toggleSegmentHideMe(b){
+    var $seg = $('.ui.segment');
+    if (b && !($seg.is(':hidden'))) {
+      $seg.slideUp(1000)
+      $('.box-1').animate({
+        paddingTop: "0.3in"
+      }, 500 );
+    } else if (!b && $seg.is(':hidden')) {
+      $seg.slideDown(1000)
+      $('.box-1').animate({
+        paddingTop: "0"
+      }, 500 );
+    }
+  }
+
+  toggleSegmentHideMe(true)
