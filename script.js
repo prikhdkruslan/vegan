@@ -147,7 +147,7 @@ var td = `
 function format2(data, multiplier, digits,a,b,unit) {
   data = data.slice()
   data[0] = (+(data[0] * multiplier).toFixed(digits)).toLocaleString();
-  console.log(data);
+  //console.log(data);
   if(a=="use" && data[2]==" + "){
     data[0]="<span class='color-red'>"+data[0]+"</span>"
   }
@@ -330,7 +330,7 @@ function updateAmount() {
       var stock = getStock(key)
       if (!stock) continue
 
-      var amount = quantity * stock.unitsPerServing
+      var amount = (quantity * stock.unitsPerServing).toFixed(2)
       dummy += " & " + amount + ' ' + stock.servingUnit + ' of ' + stock.name      
 
       function isSumable(prop) {
@@ -392,19 +392,42 @@ function updateAmount() {
 }
 
 var groups = ((s)=> {
-  var temp = []
+  var temp = [],obj = {}
   s.map((opt) => {
     opt.group = (opt.group || "").trim()
     if(!(temp.indexOf(opt.group) > -1)) 
       temp.push(opt.group)    
   })
-  return temp.sort((a,b) => a > b)
+  // return temp.sort((a,b) => a > b)
+  var l = temp.length
+
+  for(var i=0; i< l; i++) {
+    temp.sort((a,b) => {          
+      if(b.toLowerCase().indexOf('soy') > -1) 
+        return 1
+      return a < b
+    })
+  }
+  obj['s1'] = temp.slice()
+  for(var i=0; i< l; i++) {
+      temp.sort((a,b) => {
+        if(b.toLowerCase().indexOf('meat') > -1) 
+          return 1
+        if(b.toLowerCase().indexOf('grain') > -1 && a.toLowerCase().indexOf('meat') > -1) 
+          return -1
+        if(b.toLowerCase().indexOf('grain') > -1) 
+          return 1        
+        return a > b
+      })
+    }
+  obj['s2'] = temp.slice()
+  return obj
 })(stocks)
 
-function SubMenu(opt, id) {
+function SubMenu(opt, id, grp) {
 //var sub = `<div class="item" data-value="${opt.key}"><i data-id=${id} class="${opt.icon} ingredient"></i>${opt.name}</div>`
 var sub = `<div class="item" data-value="${opt.key}">
-  <i data-id=${id} class=""><img src="${opt.icon}" width="20px" height="20px"></i>
+  <i data-id=${id} data-group=${grp} class=""><img src="${opt.icon}" width="20px" height="20px"></i>
   ${opt.name}</div>`
 return sub
 }
@@ -419,7 +442,7 @@ function SubMenus(grp, id) {
   
   var temp = []
   menus.forEach((m, i)=> {
-    temp.push(SubMenu(m, id))
+    temp.push(SubMenu(m, id, grp))
   })
   return temp.join(' ')
 }
@@ -449,8 +472,14 @@ function GroupMenu(grp, id) {
 
 function DropDown(id) {      
   var temp = [],
-      text = 'Pick a food!'
-  groups.forEach((grp)=> {        
+      text = 'Pick a food!',
+      grps = []      
+  if(id === "s1") {
+    grps = groups.s1
+  } else {
+    grps = groups.s2
+  }  
+  grps.forEach((grp)=> {        
     if(grp.length == 0) {
       temp.push(SubMenus(grp, id))
     } else {
@@ -481,13 +510,19 @@ $('.ui.dropdown').dropdown({
   onChange: (list, val,text)=> {
     list = list || ""
     var id = $(val).data('id') || $(text).data('id')        
-    console.log(list, 'id:' + id, 'val: ' + val, text)
+    //console.log(list, 'id:' + id, 'val: ' + val, text)
     if(id === 's1') {
       app.one = list.split(',').filter((i)=>i)
     } else {
       app.two = list.split(',').filter((i)=>i)
     }        
     updateAmount();
+  },
+  onAdd: (list,val, text)=> {
+    var id = $(val).data('id') || $(text).data('id')        
+    var grp = $(val).data('group') || $(text).data('group')        
+    if(id === 's2' && grp.toLowerCase() === 'meat')  
+      $('.menu.sub.transition.visible').animate({scrollTop:350}, 1000)    
   }
 })
 
