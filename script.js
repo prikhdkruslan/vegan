@@ -56,7 +56,7 @@
 //   ["Chicken thighs/legs","oz",32.39053977,0.3923520408,125,2.72,12.54,0,3.431,14,30,0.01631172356,0.10625,0.2125,3.149953226,0.3765799405,4, "", "ch2"  ],  
 // ]
 
-function Stock (data, i) {
+function Stock(data, i) {
   return {
     key: i,
     name: data[0],
@@ -73,8 +73,8 @@ function Stock (data, i) {
     lives: [data[11], ''],
     feed: [data[12], ''],
     meals: [data[13], ''],
-    land : [data[14], ''],
-    healthcare : [data[15], ''],
+    land: [data[14], ''],
+    healthcare: [data[15], ''],
     unitsPerServing: data[16],
     group: data[17],
     icon: data[18]
@@ -93,50 +93,66 @@ var $quantity = $('#numberOfStocks')
 //   }))
 // })
 
-function format(data, multiplier, digits,a,b,unit) {
+function format(data, multiplier, digits, a, b, unit) {
   data = data.slice()
   data[0] = (+(data[0] * multiplier).toFixed(digits)).toLocaleString();
 
-  if(a=="bad" && data[2]==" + "){
-    data[0]="<span class='color-red'>"+data[0]+"</span>"
+  if (a == "bad" && data[2] == " + ") {
+    data[0] = "<span class='color-red'>" + data[0] + "</span>"
   }
-  if(a=="bad" && data[2]==" - "){
-    data[0]="<span class='color-green'>"+data[0]+"</span>"
+  if (a == "bad" && data[2] == " - ") {
+    data[0] = "<span class='color-green'>" + data[0] + "</span>"
   }
-  else if (a=="good" && data[2]==" - "){
-    data[0]="<span class='color-red'>"+data[0]+"</span>"
+  else if (a == "good" && data[2] == " - ") {
+    data[0] = "<span class='color-red'>" + data[0] + "</span>"
   }
-  else if (a=="good" && data[2]==" + "){
-    data[0]="<span class='color-green'>"+data[0]+"</span>"
+  else if (a == "good" && data[2] == " + ") {
+    data[0] = "<span class='color-green'>" + data[0] + "</span>"
   }
-  if(a=="bad" && data[2]=="use"){
-    data[0]="<span class='color-red'>"+data[0]+"</span>"
+  if (a == "bad" && data[2] == "use") {
+    data[0] = "<span class='color-red'>" + data[0] + "</span>"
   }
-  if(a=="bad" && data[2]=="save"){
-    data[0]="<span class='color-green'>"+data[0]+"</span>"
+  if (a == "bad" && data[2] == "save") {
+    data[0] = "<span class='color-green'>" + data[0] + "</span>"
   }
-  else if (a=="good" && data[2]=="save"){
-    data[0]="<span class='color-red'>"+data[0]+"</span>"
+  else if (a == "good" && data[2] == "save") {
+    data[0] = "<span class='color-red'>" + data[0] + "</span>"
   }
-  else if (a=="good" && data[2]=="use"){
-    data[0]="<span class='color-green'>"+data[0]+"</span>"
+  else if (a == "good" && data[2] == "use") {
+    data[0] = "<span class='color-green'>" + data[0] + "</span>"
   }
-  var temp=[];
-  if(unit=="$"){
-    temp = [data[2],"$",data[0], data[1]];
-  }else{
-    temp = [data[2],data[0], data[1]];
+  var temp = [];
+  if (unit == "$") {
+    temp = [data[2], "$", data[0], data[1]];
+  } else {
+    temp = [data[2], data[0], data[1]];
   }
-  return temp.join(' ');  
+  return temp.join(' ');
 }
 
-function Row(val, desc) {
-var td = `
+function Row(val, desc, c) {
+
+  function toLocale(num) {
+    if (typeof num == 'number')
+      return num.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+  }
+
+  var one = (c.length > 2) ? toLocale(c[0][0] * c[2]) : 0
+  var two = (c.length > 2) ? toLocale(c[1][0] * c[2]) : 0
+
+  var td = `
       <tr>
-        <td class="collapsing" style="white-space: nowrap;">
-          ${val}  
+        <td class="collapsing" style="white-space: nowrap;">        
+          <div class="ui green basic button" data-first="${one}" data-second="${two}">
+            <span class="badge">${one}</span>          
+            <i style="font-weight: bolder;font-size: 1.5em;">${val}</i>
+            <span class="badge">${two}</span>
+          </div>        
         </td>
-        <td class="collapsing">
+        <td class="collapsing" style="width:100%;">
           ${desc}
         </td>         
       </tr>
@@ -144,216 +160,168 @@ var td = `
   return td
 }
 
-function format2(data, multiplier, digits,a,b,unit) {
+function format2(data, multiplier, digits, a, b, unit) {
   data = data.slice()
   data[0] = (+(data[0] * multiplier).toFixed(digits)).toLocaleString();
   //console.log(data);
-  if(a=="use" && data[2]==" + "){
-    data[0]="<span class='color-red'>"+data[0]+"</span>"
+  if (a == "use" && data[2] == " + ") {
+    data[0] = "<span class='color-red'>" + data[0] + "</span>"
   }
-  if(a=="use" && data[2]==" - "){
-    data[0]="<span class='color-green'>"+data[0]+"</span>"
+  if (a == "use" && data[2] == " - ") {
+    data[0] = "<span class='color-green'>" + data[0] + "</span>"
   }
-  else if (a=="emit" && data[2]=="use"){
-    data[0]="<span class='color-green'>"+data[0]+"</span>"
+  else if (a == "emit" && data[2] == "use") {
+    data[0] = "<span class='color-green'>" + data[0] + "</span>"
   }
-  else if (a=="emit" && data[2]=="save"){
-    data[0]="<span class='color-red'>"+data[0]+"</span>"
+  else if (a == "emit" && data[2] == "save") {
+    data[0] = "<span class='color-red'>" + data[0] + "</span>"
   }
-  if(a=="consumegood" && data[2]=="more"){
-    data[0]="<span class='color-green'>"+data[0]+"</span>"
+  if (a == "consumegood" && data[2] == "more") {
+    data[0] = "<span class='color-green'>" + data[0] + "</span>"
   }
-  if(a=="consumegood" && data[2]=="less"){
-    data[0]="<span class='color-red'>"+data[0]+"</span>"
+  if (a == "consumegood" && data[2] == "less") {
+    data[0] = "<span class='color-red'>" + data[0] + "</span>"
   }
-  var temp=[];
-  if(unit=="$"){
-    temp = [data[2],"$",data[0],data[1]];
-  }else{
-    temp = [data[2],data[0],data[1]];
+  var temp = [];
+  if (unit == "$") {
+    temp = [data[2], "$", data[0], data[1]];
+  } else {
+    temp = [data[2], data[0], data[1]];
   }
   return temp.join(' ');
 }
 
-function stockFacts(stock, quantity) {
+function stockFacts(stock, quantity, d) {
   return [
-    format(stock.water, quantity, 2,"bad","use") + ' gallons of water<br>' +
-    format(stock.carbon, quantity, 2,"bad","emit") + ' pounds of carbon dioxide and methane equivalents <br>' +
-    format(stock.calories, quantity, 2,"bad","consume") + ' calories<br>' +
-    format(stock.protein, quantity, 2,"good","consumegood") + ' of protein<br>' +
-    format(stock.fat, quantity, 3,"bad","consume") + ' of fat<br>' +
-    format(stock.saturatedFat, quantity, 2,"bad","consume") + ' of saturated fat<br>' +
-    format(stock.sugar, quantity, 2,"bad","consume") + ' of sugar<br>' +
-    format(stock.sodium, quantity, 2,"bad","consume") + ' of sodium<br>' +
-    format(stock.cholesterol, quantity, 2,"bad","consume") + ' of cholesterol<br>' +
-    format(stock.lives, quantity, 5,"bad","save") + ' animal lives<br>' +
-    format(stock.feed, quantity, 2,"bad","require") + ' pounds of feed<br>' +
-    format(stock.meals, quantity, 2,"bad","preserve") + ' meals made from feed<br>' +
-    format(stock.land, quantity, 2,"bad","require") + ' square feet of land needed<br>' +
-    format(stock.healthcare, quantity, 2,"bad","save","$") + ' in projected healthcare costs<br>'
+    format(stock.water, quantity, 2, "bad", "use") + ' gallons of water<br>' +
+    format(stock.carbon, quantity, 2, "bad", "emit") + ' pounds of carbon dioxide and methane equivalents <br>' +
+    format(stock.calories, quantity, 2, "bad", "consume") + ' calories<br>' +
+    format(stock.protein, quantity, 2, "good", "consumegood") + ' of protein<br>' +
+    format(stock.fat, quantity, 3, "bad", "consume") + ' of fat<br>' +
+    format(stock.saturatedFat, quantity, 2, "bad", "consume") + ' of saturated fat<br>' +
+    format(stock.sugar, quantity, 2, "bad", "consume") + ' of sugar<br>' +
+    format(stock.sodium, quantity, 2, "bad", "consume") + ' of sodium<br>' +
+    format(stock.cholesterol, quantity, 2, "bad", "consume") + ' of cholesterol<br>' +
+    format(stock.lives, quantity, 5, "bad", "save") + ' animal lives<br>' +
+    format(stock.feed, quantity, 2, "bad", "require") + ' pounds of feed<br>' +
+    format(stock.meals, quantity, 2, "bad", "preserve") + ' meals made from feed<br>' +
+    format(stock.land, quantity, 2, "bad", "require") + ' square feet of land needed<br>' +
+    format(stock.healthcare, quantity, 2, "bad", "save", "$") + ' in projected healthcare costs<br>'
   ]
 }
 
-function stockFactsEnv(stock, quantity) {
+function stockFactsEnv(stock, quantity, d) {
   return [
-    `${Row(format(stock.water, quantity, 2,"bad","use"), "gallons of water")}` +
-    `${Row(format(stock.carbon, quantity, 2,"bad","emit"), "pounds of carbon dioxide and methane equivalents")}` +
-    `${Row(format(stock.land, quantity, 2,"bad","require"), "square feet of land needed")}`
+    `${Row(format(stock.water, quantity, 2, "bad", "use"), "gallons of water", [d[0].water, d[1].water, quantity])}` +
+    `${Row(format(stock.carbon, quantity, 2, "bad", "emit"), "pounds of carbon dioxide and methane equivalents", [d[0].carbon, d[1].carbon, quantity])}` +
+    `${Row(format(stock.land, quantity, 2, "bad", "require"), "square feet of land needed", [d[0].land, d[1].land, quantity])}`
   ]
 }
 
-function stockFactsHealth(stock, quantity) {
+function stockFactsHealth(stock, quantity, d) {
   return [
-    `${Row(format(stock.calories, quantity, 2,"bad","consume"), "calories")}` +
-    `${Row(format(stock.protein, quantity, 2,"good","consumegood"), "of protein")}` +
-    `${Row(format(stock.fat, quantity, 3,"bad","consume"), "of fat")}` +    
-    `${Row(format(stock.saturatedFat, quantity, 2,"bad","consume"), "of saturated fat")}` +
-    `${Row(format(stock.sugar, quantity, 2,"bad","consume"), "of sugar")}` +
-    `${Row(format(stock.sodium, quantity, 2,"bad","consume"), "of sodium")}` +
-    `${Row(format(stock.cholesterol, quantity, 2,"bad","consume"), "of cholesterol")}` +
-    `${Row(format(stock.healthcare, quantity, 2,"bad","save","$"), "in projected healthcare costs")}`
+    `${Row(format(stock.calories, quantity, 2, "bad", "consume"), "calories", [d[0].calories, d[1].calories, quantity])}` +
+    `${Row(format(stock.protein, quantity, 2, "good", "consumegood"), "of protein", [d[0].protein, d[1].protein, quantity])}` +
+    `${Row(format(stock.fat, quantity, 3, "bad", "consume"), "of fat", [d[0].fat, d[1].fat, quantity])}` +
+    `${Row(format(stock.saturatedFat, quantity, 2, "bad", "consume"), "of saturated fat", [d[0].saturatedFat, d[1].saturatedFat, quantity])}` +
+    `${Row(format(stock.sugar, quantity, 2, "bad", "consume"), "of sugar", [d[0].sugar, d[1].sugar, quantity])}` +
+    `${Row(format(stock.sodium, quantity, 2, "bad", "consume"), "of sodium", [d[0].sodium, d[1].sodium, quantity])}` +
+    `${Row(format(stock.cholesterol, quantity, 2, "bad", "consume"), "of cholesterol", [d[0].cholesterol, d[1].cholesterol, quantity])}` +
+    `${Row(format(stock.healthcare, quantity, 2, "bad", "save", "$"), "in projected healthcare costs", [d[0].healthcare, d[1].healthcare, quantity])}`
   ]
 }
 
-function stockFactsSocial(stock, quantity) {
+function stockFactsSocial(stock, quantity, d) {
   return [
-    `${Row(format(stock.lives, quantity, 5,"bad","save"), "animal lives")}` +
-    `${Row(format(stock.feed, quantity, 2,"bad","require"), "pounds of feed")}` +
-    `${Row(format(stock.meals, quantity, 2,"bad","preserve"), "meals made from feed")}`
+    `${Row(format(stock.lives, quantity, 5, "bad", "save"), "animal lives", [d[0].lives, d[1].lives, quantity])}` +
+    `${Row(format(stock.feed, quantity, 2, "bad", "require"), "pounds of feed", [d[0].feed, d[1].feed, quantity])}` +
+    `${Row(format(stock.meals, quantity, 2, "bad", "preserve"), "meals made from feed", [d[0].meals, d[1].meals, quantity])}`
   ]
 }
 
-function stockFacts2(stock, quantity) {
+function stockFacts2(stock, quantity, d) {
   return [
-    `${Row(format(stock.water, (quantity/50), 2,"bad","use"), "bathtubs worth of water used")}` +
-    `${Row(format(stock.carbon, (quantity*23.6/(20)), 2,"bad","emit"), "miles worth of carbon dioxide driven in a car")}` +
-    `${Row(format(stock.calories, quantity, 2,"bad","consume"), "calories")}` +
-    `${Row(format(stock.protein, quantity, 2,"good","consumegood"), "of protein")}` +
-    `${Row(format(stock.fat, quantity, 3,"bad","consume"), "of fat")}` +
-    `${Row(format(stock.saturatedFat, quantity, 2,"bad","consume"), "of saturated fat")}` +
-    `${Row(format(stock.sugar, quantity, 2,"bad","consume"), "of sugar")}` +
-    `${Row(format(stock.sodium, quantity, 2,"bad","consume"), "of sodium")}` +
-    `${Row(format(stock.cholesterol, quantity, 2,"bad","consume"), "of cholesterol")}` +
-    `${Row(format(stock.lives, quantity, 5,"bad","save"), "animal lives needed")}` +
-    `${Row(format(stock.feed, quantity, 2,"bad","require"), "pounds of feed required")}` +
-    `${Row("Be able to feed " + format(stock.meals, (quantity/365/3), 2,"bad","preserve"), "people for an entire year")}` +
-    `${Row(format(stock.land, (quantity/43560), 2,"bad","require"), "acres of land needed")}` +
-    `${Row(format(stock.healthcare, quantity, 2,"bad","save","$"), "in projected healthcare costs")}`
+    `${Row(format(stock.water, (quantity / 50), 2, "bad", "use"), "bathtubs worth of water used", [d[0].water, d[1].water, (quantity / 50)])}` +
+    `${Row(format(stock.carbon, (quantity * 23.6 / (20)), 2, "bad", "emit"), "miles worth of carbon dioxide driven in a car", [d[0].carbon, d[1].carbon, (quantity * 23.6 / (20))])}` +
+    `${Row(format(stock.calories, quantity, 2, "bad", "consume"), "calories", [d[0].calories, d[1].calories, quantity])}` +
+    `${Row(format(stock.protein, quantity, 2, "good", "consumegood"), "of protein", [d[0].protein, d[1].protein, quantity])}` +
+    `${Row(format(stock.fat, quantity, 3, "bad", "consume"), "of fat", [d[0].fat, d[1].fat, quantity])}` +
+    `${Row(format(stock.saturatedFat, quantity, 2, "bad", "consume"), "of saturated fat", [d[0].saturatedFat, d[1].saturatedFat, quantity])}` +
+    `${Row(format(stock.sugar, quantity, 2, "bad", "consume"), "of sugar", [d[0].sugar, d[1].sugar, quantity])}` +
+    `${Row(format(stock.sodium, quantity, 2, "bad", "consume"), "of sodium", [d[0].sodium, d[1].sodium, quantity])}` +
+    `${Row(format(stock.cholesterol, quantity, 2, "bad", "consume"), "of cholesterol", [d[0].cholesterol, d[1].cholesterol, quantity])}` +
+    `${Row(format(stock.lives, quantity, 5, "bad", "save"), "animal lives needed", [d[0].lives, d[1].lives, quantity])}` +
+    `${Row(format(stock.feed, quantity, 2, "bad", "require"), "pounds of feed required", [d[0].feed, d[1].feed, quantity])}` +
+    `${Row("Be able to feed " + format(stock.meals, (quantity / 365 / 3), 2, "bad", "preserve"), "people for an entire year", [d[0].meals, d[1].meals, (quantity / 365 / 3)])}` +
+    `${Row(format(stock.land, (quantity / 43560), 2, "bad", "require"), "acres of land needed", [d[0].land, d[1].land, (quantity / 43560)])}` +
+    `${Row(format(stock.healthcare, quantity, 2, "bad", "save", "$"), "in projected healthcare costs", [d[0].healthcare, d[1].healthcare, quantity])}`
   ]
 }
 
-function stockFacts3(stock, quantity) {
+function stockFacts3(stock, quantity, d) {
   return [
-    `${Row(format(stock.water, (quantity/660430), 2,"bad","use"), "Olympic swimming pools worth of water")}` +
-    `${Row(format(stock.carbon, (quantity/12000), 2,"bad","emit"), "cars worth of carbon dioxide")}` +
-    `${Row(format(stock.lives, quantity, 5,"bad","save"), "animal lives")}` +
-    `${Row("Be able to feed " + format(stock.meals, (quantity/3/365), 2,"bad","preserve"), "people for an entire year")}` +
-    `${Row(format(stock.land, (quantity/43560), 2,"bad","require"), "acres of land required")}` +
-    `${Row(format(stock.healthcare, quantity, 2,"bad","save","$"), "in projected healthcare costs")}`
+    `${Row(format(stock.water, (quantity / 660430), 2, "bad", "use"), "Olympic swimming pools worth of water", [d[0].water, d[1].water, (quantity / 660430)])}` +
+    `${Row(format(stock.carbon, (quantity / 12000), 2, "bad", "emit"), "cars worth of carbon dioxide", [d[0].carbon, d[1].carbon, (quantity / 12000)])}` +
+    `${Row(format(stock.lives, quantity, 5, "bad", "save"), "animal lives", [d[0].lives, d[1].lives, quantity])}` +
+    `${Row("Be able to feed " + format(stock.meals, (quantity / 3 / 365), 2, "bad", "preserve"), "people for an entire year", [d[0].meals, d[1].meals, (quantity / 3 / 365)])}` +
+    `${Row(format(stock.land, (quantity / 43560), 2, "bad", "require"), "acres of land required", [d[0].land, d[1].land, (quantity / 43560)])}` +
+    `${Row(format(stock.healthcare, quantity, 2, "bad", "save", "$"), "in projected healthcare costs", [d[0].healthcare, d[1].healthcare, quantity])}`
   ]
 }
 
-// $selects.add($quantity).on('input', updateAmount)
-
-// function getStock (select) {
-//   return stocks[+select.value]
-// }
-
-// function updateAmount() {
-//   var quantity = +$quantity.val() 
-
-//   $selects.each(function() {
-//     var $result = $(this).nextAll('.result').empty()
-//     var $amount = $(this).prev().find('.servingUnit').empty()
-//     var stock = getStock(this)
-//     if (!stock) return
-//     var amount = quantity * stock.unitsPerServing
-
-//     $amount.text(' (' + amount + ' ' + stock.servingUnit + ') of:')
-
-//     $result.html(stockFacts(stock, amount))
-//   })
-
-//   var selected = [].map.call($selects, getStock)
-//   $comparisonResult.empty()
-//   if (!selected[0] || !selected[1]) return
-//   var difference = {};
-//   var diff = {}
-//   Object.keys(selected[0]).forEach(function (k) {
-//     console.log('test',k)
-//     if (/^(name|servingUnit|unitsPerServing)$/.test(k)) return
-//     var first = selected[0][k].slice()    
-//     var second = selected[1][k].slice()
-//     first[0] *= selected[0].unitsPerServing
-//     second[0] *= selected[1].unitsPerServing
-//     difference[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? 'save' : 'use'];
-//     diff[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? ' + ' : ' - ']
-//   })
-
-//   $comparisonResult.html(stockFacts(diff, quantity));
-//   $('#env_result').html(stockFactsEnv(diff, quantity));
-//   $('#health_result').html(stockFactsHealth(diff, quantity));
-//   $('#soc_result').html(stockFactsSocial(diff, quantity));
-//   $('#year_result').html(stockFacts2(diff, quantity*365));
-//   $('#US_result').html(stockFacts3(diff,quantity*323148587));
-// }
-
-
-// $selects.add($quantity).on('input', updateAmount)
-
-function getStock (key) {
+function getStock(key) {
   return stocks[+key]
 }
 
 function updateAmount() {
-  var quantity = +$quantity.val() 
-  var selected = []  
+  var quantity = +$quantity.val()
+  var selected = []
 
-  $selects.each(function(i, elm) {
+  $selects.each(function (i, elm) {
     var id = $(elm).attr("id")
     //var $result = $(this).nextAll('.result').empty()
     var $amount = $(this).prev().find('.servingUnit').empty()
     var list = []
-    var dummy = ""    
+    var dummy = ""
     var accStock = {}
-    
-    if(id === 's1') {
-      list = app.one      
+
+    if (id === 's1') {
+      list = app.one
     } else {
       list = app.two
     }
-    
-    if(list.length == 0) return
-    
-    for(var i=0; i < list.length; i++) {
+
+    if (list.length == 0) return
+
+    for (var i = 0; i < list.length; i++) {
       var key = list[i]
       var stock = getStock(key)
       if (!stock) continue
 
       var amount = (quantity * stock.unitsPerServing).toFixed(2)
-      dummy += " & " + amount + ' ' + stock.servingUnit + ' of ' + stock.name      
+      dummy += " & " + amount + ' ' + stock.servingUnit + ' of ' + stock.name
 
       function isSumable(prop) {
-        return typeof(prop) !== 'object' ? false : typeof prop[0] === 'number'
+        return typeof (prop) !== 'object' ? false : typeof prop[0] === 'number'
       }
 
-      
-      for(var key in stock) {
-        if(stock.hasOwnProperty(key)) {
+
+      for (var key in stock) {
+        if (stock.hasOwnProperty(key)) {
           var old = accStock[key]
-          accStock[key] =  isSumable(accStock[key]) ? ([accStock[key][0] + stock[key][0],stock[key][1]]) : stock[key]
+          accStock[key] = isSumable(accStock[key]) ? ([accStock[key][0] + stock[key][0], stock[key][1]]) : stock[key]
           // console.log(key, 'old: ' + old, ' --- new: ' + accStock[key])
         }
-      }              
-    }     
+      }
+    }
 
-      dummy = '(' + dummy.substr(3) + ')'            
-      $amount.text(dummy)
-      
-      //$result.html(stockFacts(stock, amount))  
-      selected.push(accStock)    
+    dummy = '(' + dummy.substr(3) + ')'
+    $amount.text(dummy)
+
+    //$result.html(stockFacts(stock, amount))  
+    selected.push(accStock)
   })
-      
+
   //$comparisonResult.empty()
   if (!selected[0] || !selected[1]) {
 
@@ -363,93 +331,102 @@ function updateAmount() {
     $('#health_result').html('');
     $('#soc_result').html('');
     $('#year_result').html('');
-    $('#US_result').html('');      
+    $('#US_result').html('');
     return
   }
   var difference = {};
   var diff = {}
-  
-  Object.keys(selected[0]).forEach(function (k) {    
-    if (/^(key|name|servingUnit|unitsPerServing|group|icon)$/.test(k)) return   
-  
-    var first = selected[0][k].slice()    
-    var second = selected[1][k].slice()
+  var d1 = [];
+
+  Object.keys(selected[0]).forEach(function (k) {
+    if (/^(key|name|servingUnit|unitsPerServing|group|icon)$/.test(k)) return
+
+    var first = selected[0][k]
+    var second = selected[1][k]
     first[0] *= selected[0].unitsPerServing
     second[0] *= selected[1].unitsPerServing
     difference[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? 'save' : 'use'];
-    diff[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? ' + ' : ' - ']
+
+    if (k.toLowerCase() === "meals") {
+      diff[k] = [Math.abs(first[0] - second[0]), first[1], first[0] < second[0] ? ' + ' : ' - ']
+    } else {
+      diff[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? ' + ' : ' - ']
+    }
 
     // console.log('%c key, val1, val2', 'color:blue', k, first,second, diff[k])
   })
 
+  d1.push(Object.assign({}, selected[0]))
+  d1.push(Object.assign({}, selected[1]))
+
   toggleSegmentHideMe(false)
-  //$comparisonResult.html(stockFacts(diff, quantity));
-  $('#env_result').html(stockFactsEnv(diff, quantity));
-  $('#health_result').html(stockFactsHealth(diff, quantity));
-  $('#soc_result').html(stockFactsSocial(diff, quantity));
-  $('#year_result').html(stockFacts2(diff, quantity*365));
-  $('#US_result').html(stockFacts3(diff,quantity*323148587));
+  //$comparisonResult.html(stockFacts(diff, quantity));  
+  $('#env_result').html(stockFactsEnv(diff, quantity, d1));
+  $('#health_result').html(stockFactsHealth(diff, quantity, d1));
+  $('#soc_result').html(stockFactsSocial(diff, quantity, d1));
+  $('#year_result').html(stockFacts2(diff, quantity * 365, d1));
+  $('#US_result').html(stockFacts3(diff, quantity * 323148587, d1));
 }
 
-var groups = ((s)=> {
-  var temp = [],obj = {}
+var groups = ((s) => {
+  var temp = [], obj = {}
   s.map((opt) => {
     opt.group = (opt.group || "").trim()
-    if(!(temp.indexOf(opt.group) > -1)) 
-      temp.push(opt.group)    
+    if (!(temp.indexOf(opt.group) > -1))
+      temp.push(opt.group)
   })
   // return temp.sort((a,b) => a > b)
   var l = temp.length
 
-  for(var i=0; i< l; i++) {
-    temp.sort((a,b) => {          
-      if(a.toLowerCase().indexOf('soy') > -1) 
+  for (var i = 0; i < l; i++) {
+    temp.sort((a, b) => {
+      if (a.toLowerCase().indexOf('soy') > -1)
         return -1
-      if(b.toLowerCase().indexOf('soy') > -1) 
+      if (b.toLowerCase().indexOf('soy') > -1)
         return 1
       return 0
     })
   }
   obj['s1'] = temp.slice()
-  console.log(temp)
-  for(var i=0; i< l; i++) {
-      temp.sort((a,b) => {
-        if(a.toLowerCase().indexOf('meat') > -1) 
-          return -1
-        if(b.toLowerCase().indexOf('meat') > -1) 
-          return 1        
-        if(a.toLowerCase().indexOf('grain') > -1 && b.toLowerCase().indexOf('meat') == -1) 
-          return -1
-        if(b.toLowerCase().indexOf('grain') > -1 && a.toLowerCase().indexOf('meat') > -1) 
-          return -1
-        if(b.toLowerCase().indexOf('grain') > -1) 
-          return 1        
-        return 0
-      })
-    }
-    console.log(temp)
+  for (var i = 0; i < l; i++) {
+    temp.sort((a, b) => {
+      if (a.toLowerCase().indexOf('meat') > -1)
+        return -1
+      if (b.toLowerCase().indexOf('meat') > -1)
+        return 1
+      if (a.toLowerCase().indexOf('grain') > -1 && b.toLowerCase().indexOf('meat') == -1)
+        return -1
+      if (b.toLowerCase().indexOf('grain') > -1 && a.toLowerCase().indexOf('meat') > -1)
+        return -1
+      if (b.toLowerCase().indexOf('grain') > -1)
+        return 1
+      return 0
+    })
+  }
   obj['s2'] = temp.slice()
   return obj
 })(stocks)
 
+var he = 0
 function SubMenu(opt, id, grp) {
-//var sub = `<div class="item" data-value="${opt.key}"><i data-id=${id} class="${opt.icon} ingredient"></i>${opt.name}</div>`
-var sub = `<div class="item" data-value="${opt.key}">
-  <i data-id=${id} data-group=${grp} class=""><img src="${opt.icon}" width="20px" height="20px"></i>
+  he = he + 45;
+  //var sub = `<div class="item" data-value="${opt.key}"><i data-id=${id} class="${opt.icon} ingredient"></i>${opt.name}</div>`
+  var sub = `<div class="item" data-value="${opt.key}">
+  <i data-id=${id} data-group="${grp}" class=""><img src="${opt.icon}" width="20px" height="20px"></i>
   ${opt.name}</div>`
-return sub
+  return sub
 }
 
 function SubMenus(grp, id) {
   var menus = [];
-  if(grp.length == 0) {
-    menus = stocks.filter((opt)=> typeof opt.group == 'undefined' || opt.group.trim().length == 0)
+  if (grp.length == 0) {
+    menus = stocks.filter((opt) => typeof opt.group == 'undefined' || opt.group.trim().length == 0)
   } else {
-    menus = stocks.filter((opt)=> opt.group == grp)
+    menus = stocks.filter((opt) => opt.group == grp)
   }
-  
+
   var temp = []
-  menus.forEach((m, i)=> {
+  menus.forEach((m, i) => {
     temp.push(SubMenu(m, id, grp))
   })
   return temp.join(' ')
@@ -467,33 +444,35 @@ function SubDropDown(grp, id) {
 }
 
 function GroupMenu(grp, id) {
-  var group = 
+  var group =
     `<div class="divider"></div>
-    <div class="header">
+    <div class="header" data-group-header="${grp}" data-pos=${he}>
       <i class="tags icon"></i>
       ${grp}
     </div>    
       ${SubMenus(grp, id)}
-    `    
+    `
   return group
 }
 
-function DropDown(id) {      
+function DropDown(id) {
   var temp = [],
-      text = 'Pick a food!',
-      grps = []      
-  if(id === "s1") {
+    text = 'Pick a food!',
+    grps = []
+  if (id === "s1") {
     grps = groups.s1
   } else {
     grps = groups.s2
-  }  
-  grps.forEach((grp)=> {        
-    if(grp.length == 0) {
+  }
+
+  he = 0;
+  grps.forEach((grp) => {
+    if (grp.length == 0) {
       temp.push(SubMenus(grp, id))
     } else {
-      //temp.push(SubDropDown(grp, id))
+      //temp.push(SubDropDown(grp, id))      
       temp.push(GroupMenu(grp, id))
-    }    
+    }
   })
 
   var template = `
@@ -504,54 +483,107 @@ function DropDown(id) {
       ${temp.join(' ')}
     </div>
   </div>
-  `    
+  `
   return template
 
 }
 
-$('.stockSelect').each((i, elm)=> {
-  var id = $(elm).attr("id")  
+$('.stockSelect').each((i, elm) => {
+  var id = $(elm).attr("id")
   $(elm).append(DropDown(id))
-}) 
+})
 
 $('.ui.dropdown').dropdown({
-  onChange: (list, val,text)=> {
+  onChange: (list, val, text) => {
     list = list || ""
-    var id = $(val).data('id') || $(text).data('id')        
+    var id = $(val).data('id') || $(text).data('id')
     //console.log(list, 'id:' + id, 'val: ' + val, text)
-    if(id === 's1') {
-      app.one = list.split(',').filter((i)=>i)
+    if (id === 's1') {
+      app.one = list.split(',').filter((i) => i)
     } else {
-      app.two = list.split(',').filter((i)=>i)
-    }        
+      app.two = list.split(',').filter((i) => i)
+    }
     updateAmount();
+    syncGroupHeaderHeight(id);
   },
-  onAdd: (list,val, text)=> {
-    var id = $(val).data('id') || $(text).data('id')        
-    var grp = $(val).data('group') || $(text).data('group')        
-    if(id === 's2' && grp.toLowerCase() === 'meat')  
-      $('.menu.sub.transition.visible').animate({scrollTop:350}, 1000)    
+  // onAdd: (list,val, text, d)=> {
+  // var id = $(val).data('id') || $(text).data('id')        
+  // var grp = $(val).data('group') || $(text).data('group')        
+  // if(id === 's2' && grp.toLowerCase() === 'meat')  
+  //   $('.menu.sub.transition.visible').animate({scrollTop:350}, 1000)
+  //   console.log('test', d)
+  // }
+  onAdd: function (list, val, text) {
+    var grp = $(val).data('group') || $(text).data('group')
+    var $g = $(this).find('[data-group-header="' + grp + '"]').eq(0)
+    var $ng = $g.nextAll('[data-group-header]').eq(0)
+    if ($ng.length > 0) {
+      var pos = $ng.data('pos')
+      $('.menu.sub.transition.visible').animate({ scrollTop: pos }, 1000)
+    } else {
+      $('.menu.sub.transition.visible').animate({ scrollTop: 0 }, 1000)
+    }
   }
 })
 
 $quantity.on('input', updateAmount)
 
 //global var
-var app = {one:[], two:[]};
+var app = { one: [], two: [] };
 
-function toggleSegmentHideMe(b){
-    var $seg = $('.ui.segment');
-    if (b && !($seg.is(':hidden'))) {
-      $seg.slideUp(1000)
-      $('.box-1').animate({
-        paddingTop: "0.3in"
-      }, 500 );
-    } else if (!b && $seg.is(':hidden')) {
-      $seg.slideDown(1000)
-      $('.box-1').animate({
-        paddingTop: "0"
-      }, 500 );
-    }
+function toggleSegmentHideMe(b) {
+  var $seg = $('.ui.segment');
+  if (b && !($seg.is(':hidden'))) {
+    $seg.slideUp(1000)
+    $('.box-1').animate({
+      paddingTop: "0.3in"
+    }, 500);
+  } else if (!b && $seg.is(':hidden')) {
+    $seg.slideDown(1000)
+    $('.box-1').animate({
+      paddingTop: "0"
+    }, 500);
   }
+}
 
-  toggleSegmentHideMe(true)
+toggleSegmentHideMe(true)
+
+//set default height of each column
+var adjustBoxHeight = (function () {
+  var box = $('.ui.segment, .main-form'),
+    h = screen.availHeight - 45
+  box.css({
+    'min-height': h
+  })
+})()
+
+function syncGroupHeaderHeight(id) {
+  var list = [];
+  if(id === 's1') {
+    list = app.one.map((i)=>Number(i))
+  } else {
+    list = app.two.map((i)=>Number(i))
+  }
+  $selects.each((i, elm) => {
+    if ($(elm).attr('id') === id) {
+      $(elm).find('.menu.sub.transition').each((i, ul) => {
+        var hi = 0;
+        $(ul).find('.item, .header').each((i, li) => {          
+          var val = $(li).data('value');
+          //console.log(list, val)
+          if (!(list.indexOf(val) > -1)) {
+            if ($(li).hasClass('header')) {
+              var t = $(li).data('pos')
+              $(li).data('pos', hi)
+              //console.log(li, 'from', t, $(li).data('pos'))              
+            }              
+            hi = hi + 45
+          } else {
+            //console.log(li, list)
+            //console.log(li, $(li).data('pos'))
+          }
+        })
+      })
+    }
+  })  
+}

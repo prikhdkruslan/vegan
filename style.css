@@ -1,15 +1,13 @@
 .main-container{ 
   display: flex; 
-  flex-wrap: wrap;
-  margin: 15px 7%;
+  flex-wrap: wrap;    
 }
 
 *{
   padding : 0;
   margin : 0;
 }
-body{
-  height : 100vh;
+body{  
   background-color: #F8F8FF;  
 }
 
@@ -69,14 +67,6 @@ button.navbar-toggle span.icon-bar {
 .topnav a.active {
   background-color: #4CAF50;
   color: white;
-}
-
-.box-1{
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  margin-top: 25px;
-  margin-bottom: 50px;
 }
 
 .box{
@@ -180,17 +170,120 @@ i.ingredient.ch2:before{
 .ui.segment {
   margin-top: 10px!important;
   display: none;  
+  position: relative!important;
+}
+
+.navbar-brand>img {
+    margin-top: -10px;
+}
+
+.nav.navbar-nav {
+  margin-left: 27vw;
+}
+
+.main-form {
+  background: url("./images/cow_background.jpg") no-repeat center;
+  background-size: cover;      
+  position: relative;
+  width: 100vw;
+  height: 100px;
+}
+
+.box-1{    
+    position: relative;
+    top: 25%;    
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ui.form {
+    align-self: center;
+    border-radius: 12px;
+    padding: 24px 48px;
+    background: rgba(50, 153, 59, .8);
+    box-shadow: 9px 12px 23px rgba(50, 100, 50, .8);
+}
+
+.result {
+  padding-top: 25px;
+}
+
+.ui.segment>table th {
+    padding: 20px 44px;
+    font-size: 1.6em;
+}
+
+.ui.segment>table th>i {
+    margin-right: 15px;    
+}
+
+.ui.segment>table {
+  font-size: 1.5em;
+}
+
+.ui.segment>table tbody {
+    padding: 2em 2em;
+    /*position: absolute;*/
+    width: 100%;   
+}
+
+.ui.form .field {
+    font-size: 1.2em;
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.ui.form .field>label {
+    color: rgba(255, 255, 255, 0.87)!important;    
+}
+
+.badge {
+    margin: 0 5px;
+    padding: 11px 8px;
+}
+
+@media only screen and (max-width: 767px){
+  .ui.search.dropdown .menu {
+      max-height: 25rem!important;
+  }
+}
+
+@media only screen and (min-width: 992px){
+  .ui.search.dropdown .menu {
+      max-height: 25rem!important;
+  }
+}
+@media only screen and (min-width: 768px){
+  .ui.search.dropdown .menu {
+    max-height: 25rem!important;  
+  }
+}
+
+@media screen and (max-width: 1200px) {
+ .nav.navbar-nav {
+    margin-left: 21vw;
+  }
+}
+
+@media screen and (max-width: 950px) {
+ .nav.navbar-nav {
+    margin-left: 10vw;
+  }
 }
 
 @media screen and (max-width: 480px) {
-  .col-lg-4 {
-    margin-left: calc(-3vw);
+  .col-lg-12 {
+    margin-left: calc(-4vw);
     margin-right: calc(10vw);
   }  
 }
 
 @media screen and (max-width: 320px) {
-  .col-lg-4 {
+  .col-lg-12 {
     margin-left: calc(-9vw);    
   }  
 }
