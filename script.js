@@ -403,23 +403,31 @@ var groups = ((s)=> {
 
   for(var i=0; i< l; i++) {
     temp.sort((a,b) => {          
+      if(a.toLowerCase().indexOf('soy') > -1) 
+        return -1
       if(b.toLowerCase().indexOf('soy') > -1) 
         return 1
-      return a < b
+      return 0
     })
   }
   obj['s1'] = temp.slice()
+  console.log(temp)
   for(var i=0; i< l; i++) {
       temp.sort((a,b) => {
+        if(a.toLowerCase().indexOf('meat') > -1) 
+          return -1
         if(b.toLowerCase().indexOf('meat') > -1) 
-          return 1
+          return 1        
+        if(a.toLowerCase().indexOf('grain') > -1 && b.toLowerCase().indexOf('meat') == -1) 
+          return -1
         if(b.toLowerCase().indexOf('grain') > -1 && a.toLowerCase().indexOf('meat') > -1) 
           return -1
         if(b.toLowerCase().indexOf('grain') > -1) 
           return 1        
-        return a > b
+        return 0
       })
     }
+    console.log(temp)
   obj['s2'] = temp.slice()
   return obj
 })(stocks)

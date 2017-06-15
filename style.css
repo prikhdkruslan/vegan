@@ -173,8 +173,24 @@ i.ingredient.ch2:before{
 .ui.multiple.selection.dropdown .menu.sub {
   overflow-x: visible!important;
   overflow-y: auto;
+  
+
 }
 
 .ui.segment {
-  margin-top: 10px!important;  
+  margin-top: 10px!important;
+  display: none;  
+}
+
+@media screen and (max-width: 480px) {
+  .col-lg-4 {
+    margin-left: calc(-3vw);
+    margin-right: calc(10vw);
+  }  
+}
+
+@media screen and (max-width: 320px) {
+  .col-lg-4 {
+    margin-left: calc(-9vw);    
+  }  
 }
