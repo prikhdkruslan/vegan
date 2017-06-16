@@ -95,7 +95,8 @@ var $quantity = $('#numberOfStocks')
 
 function format(data, multiplier, digits, a, b, unit) {
   data = data.slice()
-  data[0] = (+(data[0] * multiplier).toFixed(digits)).toLocaleString();
+  digits = unit == "$" ? 2 : digits
+  data[0] = (+(data[0] * multiplier).toFixed(digits)).toLocaleString();  
 
   if (a == "bad" && data[2] == " + ") {
     data[0] = "<span class='color-red'>" + data[0] + "</span>"
@@ -121,8 +122,10 @@ function format(data, multiplier, digits, a, b, unit) {
   else if (a == "good" && data[2] == "use") {
     data[0] = "<span class='color-green'>" + data[0] + "</span>"
   }
+
+  data[1] = "<span style='color:#212121'>" + data[1] + "</span>"
   var temp = [];
-  if (unit == "$") {
+  if (unit == "$") {    
     temp = [data[2], "$", data[0], data[1]];
   } else {
     temp = [data[2], data[0], data[1]];
@@ -130,7 +133,6 @@ function format(data, multiplier, digits, a, b, unit) {
   return temp.join(' ');
 }
 
-function Row(val, desc, c) {
 
   function toLocale(num) {
     if (typeof num == 'number')
@@ -140,15 +142,16 @@ function Row(val, desc, c) {
       })
   }
 
+function Row(val, desc, c) {
   var one = (c.length > 2) ? toLocale(c[0][0] * c[2]) : 0
   var two = (c.length > 2) ? toLocale(c[1][0] * c[2]) : 0
 
   var td = `
       <tr>
-        <td class="collapsing" style="white-space: nowrap;">        
+        <td class="collapsing" style="white-space: nowrap; text-align:right">        
           <div class="ui green basic button" data-first="${one}" data-second="${two}">
             <span class="badge">${one}</span>          
-            <i style="font-weight: bolder;font-size: 1.5em;">${val}</i>
+            <i class="vals">${val}</i>
             <span class="badge">${two}</span>
           </div>        
         </td>
@@ -252,7 +255,7 @@ function stockFacts2(stock, quantity, d) {
     `${Row(format(stock.cholesterol, quantity, 2, "bad", "consume"), "of cholesterol", [d[0].cholesterol, d[1].cholesterol, quantity])}` +
     `${Row(format(stock.lives, quantity, 5, "bad", "save"), "animal lives needed", [d[0].lives, d[1].lives, quantity])}` +
     `${Row(format(stock.feed, quantity, 2, "bad", "require"), "pounds of feed required", [d[0].feed, d[1].feed, quantity])}` +
-    `${Row("Be able to feed " + format(stock.meals, (quantity / 365 / 3), 2, "bad", "preserve"), "people for an entire year", [d[0].meals, d[1].meals, (quantity / 365 / 3)])}` +
+    `${Row("able to be fed<br>" + format(stock.meals, (quantity / 365 / 3), 2, "bad", "preserve"), "people for an entire year", [d[0].meals, d[1].meals, (quantity / 365 / 3)])}` +
     `${Row(format(stock.land, (quantity / 43560), 2, "bad", "require"), "acres of land needed", [d[0].land, d[1].land, (quantity / 43560)])}` +
     `${Row(format(stock.healthcare, quantity, 2, "bad", "save", "$"), "in projected healthcare costs", [d[0].healthcare, d[1].healthcare, quantity])}`
   ]
@@ -263,7 +266,7 @@ function stockFacts3(stock, quantity, d) {
     `${Row(format(stock.water, (quantity / 660430), 2, "bad", "use"), "Olympic swimming pools worth of water", [d[0].water, d[1].water, (quantity / 660430)])}` +
     `${Row(format(stock.carbon, (quantity / 12000), 2, "bad", "emit"), "cars worth of carbon dioxide", [d[0].carbon, d[1].carbon, (quantity / 12000)])}` +
     `${Row(format(stock.lives, quantity, 5, "bad", "save"), "animal lives", [d[0].lives, d[1].lives, quantity])}` +
-    `${Row("Be able to feed " + format(stock.meals, (quantity / 3 / 365), 2, "bad", "preserve"), "people for an entire year", [d[0].meals, d[1].meals, (quantity / 3 / 365)])}` +
+    `${Row("able to be fed <br>" + format(stock.meals, (quantity / 3 / 365), 2, "bad", "preserve"), "people for an entire year", [d[0].meals, d[1].meals, (quantity / 3 / 365)])}` +
     `${Row(format(stock.land, (quantity / 43560), 2, "bad", "require"), "acres of land required", [d[0].land, d[1].land, (quantity / 43560)])}` +
     `${Row(format(stock.healthcare, quantity, 2, "bad", "save", "$"), "in projected healthcare costs", [d[0].healthcare, d[1].healthcare, quantity])}`
   ]
@@ -380,9 +383,9 @@ var groups = ((s) => {
 
   for (var i = 0; i < l; i++) {
     temp.sort((a, b) => {
-      if (a.toLowerCase().indexOf('soy') > -1)
+      if (a.toLowerCase().indexOf('legumes') > -1)
         return -1
-      if (b.toLowerCase().indexOf('soy') > -1)
+      if (b.toLowerCase().indexOf('legumes') > -1)
         return 1
       return 0
     })
@@ -505,6 +508,7 @@ $('.ui.dropdown').dropdown({
     }
     updateAmount();
     syncGroupHeaderHeight(id);
+    scroller();
   },
   // onAdd: (list,val, text, d)=> {
   // var id = $(val).data('id') || $(text).data('id')        
@@ -551,11 +555,32 @@ toggleSegmentHideMe(true)
 //set default height of each column
 var adjustBoxHeight = (function () {
   var box = $('.ui.segment, .main-form'),
-    h = screen.availHeight - 45
+    h = $(window).height()         //screen.availHeight - 45
   box.css({
     'min-height': h
   })
 })()
+
+function scrollToEnv(){
+  var id = $('#environmental-impact')
+  var top = id.offset().top - 30 
+  $("html, body").animate({ scrollTop: top + "px" }, 1000);
+}
+
+
+function scroller() {  
+  if(app.one.length == 0 || app.two.length == 0) {
+    return
+  }
+  if(window.isWaiting || typeof window.isWaiting === 'undefined') {
+    clearTimeout(window.isWaiting)
+    window.isWaiting = setTimeout(()=> {
+      window.isWaiting = undefined
+      scrollToEnv()
+    }, 3500)
+    return
+  }      
+}
 
 function syncGroupHeaderHeight(id) {
   var list = [];
@@ -578,9 +603,6 @@ function syncGroupHeaderHeight(id) {
               //console.log(li, 'from', t, $(li).data('pos'))              
             }              
             hi = hi + 45
-          } else {
-            //console.log(li, list)
-            //console.log(li, $(li).data('pos'))
           }
         })
       })

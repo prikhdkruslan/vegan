@@ -182,7 +182,7 @@ i.ingredient.ch2:before{
 }
 
 .main-form {
-  background: url("./images/cow_background.jpg") no-repeat center;
+  background: url("./images/agriculture.jpg") no-repeat center;
   background-size: cover;      
   position: relative;
   width: 100vw;
@@ -210,6 +210,10 @@ i.ingredient.ch2:before{
   padding-top: 25px;
 }
 
+.celled.striped.table {
+  display: inline-block;
+}
+
 .ui.segment>table th {
     padding: 20px 44px;
     font-size: 1.6em;
@@ -224,8 +228,7 @@ i.ingredient.ch2:before{
 }
 
 .ui.segment>table tbody {
-    padding: 2em 2em;
-    /*position: absolute;*/
+    padding: 2em 2em;    
     width: 100%;   
 }
 
@@ -241,6 +244,11 @@ i.ingredient.ch2:before{
     color: rgba(255, 255, 255, 0.87)!important;    
 }
 
+.vals {
+    font-weight: bolder;
+    font-size: 1.5em;
+  }
+
 .badge {
     margin: 0 5px;
     padding: 11px 8px;
@@ -250,6 +258,48 @@ i.ingredient.ch2:before{
   .ui.search.dropdown .menu {
       max-height: 25rem!important;
   }
+
+  .ui.segment {
+    margin-left: 10% !important;
+    max-width: 90%;
+  }
+
+  .ui.segment>table th {  
+    padding: 18px 10px;  
+    font-size: 1em;
+  }
+
+  .ui.segment>table th>i {
+      margin-right: 15px;    
+  }
+
+  .ui.segment>table {
+    font-size: 1em;
+  }
+  
+  .ui.form .field {
+      font-size: 1em;
+  }
+
+  .vals {
+    font-weight: bolder;
+    font-size: 1em;
+  }
+
+  .ui.green.basic.button {
+    padding: 4px 10px;
+  }
+
+  .ui.green.basic.button .badge{
+    padding: 6px 11px;
+  }
+
+  .badge {
+    font-size: .7em;
+    padding: 10px;
+    display: none;
+  }
+
 }
 
 @media only screen and (min-width: 992px){

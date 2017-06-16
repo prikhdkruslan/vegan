@@ -1,4 +1,4 @@
-stocks = [
+stocks_old = [
   ["Banana","medium",6.440662244,0.1763699536,105,1.29,0.39,14.43,0.132,1,0,0,0,0,0.1768995697,1.221618974,1,"Fruits & Veggies","https://image.flaticon.com/icons/svg/415/415761.svg"  ],
   ["Mixed vegetables","oz",2.41150377,0.125,18,0.81,0.04,0,0.009,10,0,0,0,0,3,0.0004987075014,4,"Fruits & Veggies","https://image.flaticon.com/icons/svg/188/188364.svg"  ],
   ["Potatoes","oz",1.872285536,0.03575,16,0.73,0.03,0.2,0.007,3,0,0,0,0,0.06927480776,0.01708057695,5.3,"Fruits & Veggies","https://image.flaticon.com/icons/svg/135/135676.svg"  ],
