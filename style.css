@@ -1,8 +1,3 @@
-.main-container{ 
-  display: flex; 
-  flex-wrap: wrap;    
-}
-
 *{
   padding : 0;
   margin : 0;
@@ -84,7 +79,10 @@ button.navbar-toggle span.icon-bar {
   font-size : 1.5em;
 }
 
-
+.fa.cow {
+    width: 40px;
+    margin-right: 12px;
+}
 
 @media screen and (max-width: 480px) {
   .box{
@@ -169,8 +167,7 @@ i.ingredient.ch2:before{
 
 .ui.segment {
   margin-top: 10px!important;
-  display: none;  
-  position: relative!important;
+  display: none;    
 }
 
 .navbar-brand>img {
@@ -181,33 +178,62 @@ i.ingredient.ch2:before{
   margin-left: 27vw;
 }
 
+.main-container{ 
+  display: flex; 
+  flex-direction:column;    
+  align-items: center;
+  justify-content: center;
+  margin-top: 51px;
+}
+
 .main-form {
-  background: url("./images/agriculture.jpg") no-repeat center;
+  background: url("./images/Traditional_Farming_Methods.jpg") no-repeat center;
   background-size: cover;      
   position: relative;
   width: 100vw;
   height: 100px;
+  flex: 1;
+  align-self: center;
+  display: flex;
+}
+.result {  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.box-1{    
-    position: relative;
-    top: 25%;    
+.row {
+  width: 100%;
+}
+
+.col-lg-12 {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.box-1{        
     text-align: center;
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-self: center;    
 }
 
 .ui.form {
     align-self: center;
     border-radius: 12px;
-    padding: 24px 48px;
+    padding: 9px 10px;
     background: rgba(50, 153, 59, .8);
-    box-shadow: 9px 12px 23px rgba(50, 100, 50, .8);
+    box-shadow: 7px 5px 3px rgba(50, 100, 50, .8);
+    flex: 1;
 }
 
 .result {
-  padding-top: 25px;
+  padding-top: 25px;  
+  flex: 1;
 }
 
 .celled.striped.table {
@@ -259,11 +285,13 @@ i.ingredient.ch2:before{
       max-height: 25rem!important;
   }
 
-  .ui.segment {
-    margin-left: 10% !important;
-    max-width: 90%;
+  .ui.segment {    
+    /*max-width: 90%;*/
   }
 
+  .fa.cow {
+      width: 19px;      
+  }
   .ui.segment>table th {  
     padding: 18px 10px;  
     font-size: 1em;
@@ -327,13 +355,13 @@ i.ingredient.ch2:before{
 
 @media screen and (max-width: 480px) {
   .col-lg-12 {
-    margin-left: calc(-4vw);
-    margin-right: calc(10vw);
+    /*margin-left: calc(-4vw);
+    margin-right: calc(10vw);*/
   }  
 }
 
 @media screen and (max-width: 320px) {
   .col-lg-12 {
-    margin-left: calc(-9vw);    
+    /*margin-left: calc(-9vw);    */
   }  
 }

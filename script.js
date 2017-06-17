@@ -93,69 +93,71 @@ var $quantity = $('#numberOfStocks')
 //   }))
 // })
 
-function format(data, multiplier, digits, a, b, unit) {
-  data = data.slice()
-  digits = unit == "$" ? 2 : digits
-  data[0] = (+(data[0] * multiplier).toFixed(digits)).toLocaleString();  
-
-  if (a == "bad" && data[2] == " + ") {
-    data[0] = "<span class='color-red'>" + data[0] + "</span>"
-  }
-  if (a == "bad" && data[2] == " - ") {
-    data[0] = "<span class='color-green'>" + data[0] + "</span>"
-  }
-  else if (a == "good" && data[2] == " - ") {
-    data[0] = "<span class='color-red'>" + data[0] + "</span>"
-  }
-  else if (a == "good" && data[2] == " + ") {
-    data[0] = "<span class='color-green'>" + data[0] + "</span>"
-  }
-  if (a == "bad" && data[2] == "use") {
-    data[0] = "<span class='color-red'>" + data[0] + "</span>"
-  }
-  if (a == "bad" && data[2] == "save") {
-    data[0] = "<span class='color-green'>" + data[0] + "</span>"
-  }
-  else if (a == "good" && data[2] == "save") {
-    data[0] = "<span class='color-red'>" + data[0] + "</span>"
-  }
-  else if (a == "good" && data[2] == "use") {
-    data[0] = "<span class='color-green'>" + data[0] + "</span>"
-  }
-
-  data[1] = "<span style='color:#212121'>" + data[1] + "</span>"
-  var temp = [];
-  if (unit == "$") {    
-    temp = [data[2], "$", data[0], data[1]];
-  } else {
-    temp = [data[2], data[0], data[1]];
-  }
-  return temp.join(' ');
-}
-
-
-  function toLocale(num) {
+function toLocale(num, dig) {
+  var dig = typeof dig == "undefined" ? 2 : dig
     if (typeof num == 'number')
       return num.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+        minimumFractionDigits: dig,
+        maximumFractionDigits: dig
       })
   }
 
+function format(data, multiplier, digits, a, b, unit) {  
+  data = data.slice()
+  
+  digits = unit == "$" ? 2 : digits
+  data[0] = toLocale(+(data[0] * multiplier), digits) //.toFixed(digits)).toLocaleString();  
+
+  if (unit == "$") {    
+    data[0] = ["$", data[0]].join(" ");
+  }
+
+  if (a == "bad" && data[2] == " + ") {
+    data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
+  }
+  if (a == "bad" && data[2] == " - ") {
+    data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
+  }
+  else if (a == "good" && data[2] == " - ") {
+    data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
+  }
+  else if (a == "good" && data[2] == " + ") {
+    data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
+  }
+  if (a == "bad" && data[2] == "use") {
+    data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
+  }
+  if (a == "bad" && data[2] == "save") {
+    data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
+  }
+  else if (a == "good" && data[2] == "save") {
+    data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
+  }
+  else if (a == "good" && data[2] == "use") {
+    data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
+  }
+
+  data[1] = "<span style='color:#212121'>" + data[1] + "</span>"
+  var temp = [];  
+  temp = [data[0], data[1]];
+  
+  return temp.join(' ');
+}
+  
 function Row(val, desc, c) {
   var one = (c.length > 2) ? toLocale(c[0][0] * c[2]) : 0
   var two = (c.length > 2) ? toLocale(c[1][0] * c[2]) : 0
 
   var td = `
       <tr>
-        <td class="collapsing" style="white-space: nowrap; text-align:right">        
+        <td class="collapsing" style="white-space: nowrap; text-align:left">        
           <div class="ui green basic button" data-first="${one}" data-second="${two}">
             <span class="badge">${one}</span>          
             <i class="vals">${val}</i>
             <span class="badge">${two}</span>
           </div>        
         </td>
-        <td class="collapsing" style="width:100%;">
+        <td class="collapsing" style="width:100%; text-align:right">
           ${desc}
         </td>         
       </tr>
@@ -255,7 +257,7 @@ function stockFacts2(stock, quantity, d) {
     `${Row(format(stock.cholesterol, quantity, 2, "bad", "consume"), "of cholesterol", [d[0].cholesterol, d[1].cholesterol, quantity])}` +
     `${Row(format(stock.lives, quantity, 5, "bad", "save"), "animal lives needed", [d[0].lives, d[1].lives, quantity])}` +
     `${Row(format(stock.feed, quantity, 2, "bad", "require"), "pounds of feed required", [d[0].feed, d[1].feed, quantity])}` +
-    `${Row("able to be fed<br>" + format(stock.meals, (quantity / 365 / 3), 2, "bad", "preserve"), "people for an entire year", [d[0].meals, d[1].meals, (quantity / 365 / 3)])}` +
+    `${Row(format(stock.meals, (quantity / 365 / 3), 2, "bad", "preserve"), "people who can be fed for an entire year", [d[0].meals, d[1].meals, (quantity / 365 / 3)])}` +
     `${Row(format(stock.land, (quantity / 43560), 2, "bad", "require"), "acres of land needed", [d[0].land, d[1].land, (quantity / 43560)])}` +
     `${Row(format(stock.healthcare, quantity, 2, "bad", "save", "$"), "in projected healthcare costs", [d[0].healthcare, d[1].healthcare, quantity])}`
   ]
@@ -266,7 +268,7 @@ function stockFacts3(stock, quantity, d) {
     `${Row(format(stock.water, (quantity / 660430), 2, "bad", "use"), "Olympic swimming pools worth of water", [d[0].water, d[1].water, (quantity / 660430)])}` +
     `${Row(format(stock.carbon, (quantity / 12000), 2, "bad", "emit"), "cars worth of carbon dioxide", [d[0].carbon, d[1].carbon, (quantity / 12000)])}` +
     `${Row(format(stock.lives, quantity, 5, "bad", "save"), "animal lives", [d[0].lives, d[1].lives, quantity])}` +
-    `${Row("able to be fed <br>" + format(stock.meals, (quantity / 3 / 365), 2, "bad", "preserve"), "people for an entire year", [d[0].meals, d[1].meals, (quantity / 3 / 365)])}` +
+    `${Row(format(stock.meals, (quantity / 3 / 365), 2, "bad", "preserve"), "people who can be fed for an entire year", [d[0].meals, d[1].meals, (quantity / 3 / 365)])}` +
     `${Row(format(stock.land, (quantity / 43560), 2, "bad", "require"), "acres of land required", [d[0].land, d[1].land, (quantity / 43560)])}` +
     `${Row(format(stock.healthcare, quantity, 2, "bad", "save", "$"), "in projected healthcare costs", [d[0].healthcare, d[1].healthcare, quantity])}`
   ]
@@ -506,9 +508,10 @@ $('.ui.dropdown').dropdown({
     } else {
       app.two = list.split(',').filter((i) => i)
     }
-    updateAmount();
+    //updateAmount();
     syncGroupHeaderHeight(id);
-    scroller();
+    $('#submit').prop('disabled', false)
+    //scroller();
   },
   // onAdd: (list,val, text, d)=> {
   // var id = $(val).data('id') || $(text).data('id')        
@@ -536,7 +539,7 @@ $quantity.on('input', updateAmount)
 var app = { one: [], two: [] };
 
 function toggleSegmentHideMe(b) {
-  var $seg = $('.ui.segment');
+  var $seg = $('.ui.segment, .result');
   if (b && !($seg.is(':hidden'))) {
     $seg.slideUp(1000)
     $('.box-1').animate({
@@ -567,6 +570,13 @@ function scrollToEnv(){
   $("html, body").animate({ scrollTop: top + "px" }, 1000);
 }
 
+$('#submit').click((e)=> {    
+  console.log(1)
+  $(e.target).prop('disabled', true);
+  updateAmount();
+  scrollToEnv();  
+  e.preventDefault()
+})
 
 function scroller() {  
   if(app.one.length == 0 || app.two.length == 0) {
