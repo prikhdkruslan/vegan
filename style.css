@@ -187,7 +187,7 @@ i.ingredient.ch2:before{
 }
 
 .main-form {
-  background: url("./images/Traditional_Farming_Methods.jpg") no-repeat center;
+  background: url("./images/farm.jpg") no-repeat center;
   background-size: cover;      
   position: relative;
   width: 100vw;
@@ -229,6 +229,7 @@ i.ingredient.ch2:before{
     background: rgba(50, 153, 59, .8);
     box-shadow: 7px 5px 3px rgba(50, 100, 50, .8);
     flex: 1;
+    margin-top: -50px;
 }
 
 .result {

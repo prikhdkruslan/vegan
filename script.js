@@ -112,12 +112,14 @@ function format(data, multiplier, digits, a, b, unit) {
     data[0] = ["$", data[0]].join(" ");
   }
 
-  if (a == "bad" && data[2] == " + ") {
-    data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
+  if (a == "bad" && data[2] == " + ") {    
+      data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
   }
-  if (a == "bad" && data[2] == " - ") {
-    data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
+
+  if (a == "bad" && data[2] == " - ") {    
+      data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
   }
+  
   else if (a == "good" && data[2] == " - ") {
     data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
   }
@@ -137,6 +139,17 @@ function format(data, multiplier, digits, a, b, unit) {
     data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
   }
 
+  if(b == 'preserve') {
+    var a = "<span class='color-green'>"
+    var b = "<span class='color-red'>"
+    
+    if(data[0].indexOf(a) > -1) {
+      data[0] = data[0].replace(a, b)
+    } else {
+      data[0] = data[0].replace(b, a)
+    }
+  }
+
   data[1] = "<span style='color:#212121'>" + data[1] + "</span>"
   var temp = [];  
   temp = [data[0], data[1]];
@@ -150,14 +163,14 @@ function Row(val, desc, c) {
 
   var td = `
       <tr>
-        <td class="collapsing" style="white-space: nowrap; text-align:left">        
+        <td class="collapsing" style="white-space: nowrap; text-align:center">        
           <div class="ui green basic button" data-first="${one}" data-second="${two}">
             <span class="badge">${one}</span>          
             <i class="vals">${val}</i>
             <span class="badge">${two}</span>
           </div>        
         </td>
-        <td class="collapsing" style="width:100%; text-align:right">
+        <td class="collapsing" style="width:100%; text-align:center">
           ${desc}
         </td>         
       </tr>
@@ -326,6 +339,10 @@ function updateAmount() {
     //$result.html(stockFacts(stock, amount))  
     selected.push(accStock)
   })
+
+  if($('#submit').attr('disabled') !== 'disabled') {
+    return;
+  }
 
   //$comparisonResult.empty()
   if (!selected[0] || !selected[1]) {
@@ -498,6 +515,11 @@ $('.stockSelect').each((i, elm) => {
   $(elm).append(DropDown(id))
 })
 
+function submitReady(){
+  $('#submit').prop('disabled', false)
+  updateAmount()
+}
+
 $('.ui.dropdown').dropdown({
   onChange: (list, val, text) => {
     list = list || ""
@@ -510,7 +532,7 @@ $('.ui.dropdown').dropdown({
     }
     //updateAmount();
     syncGroupHeaderHeight(id);
-    $('#submit').prop('disabled', false)
+    submitReady()
     //scroller();
   },
   // onAdd: (list,val, text, d)=> {
@@ -533,7 +555,8 @@ $('.ui.dropdown').dropdown({
   }
 })
 
-$quantity.on('input', updateAmount)
+//$quantity.on('input', updateAmount)
+$quantity.on('input', submitReady)
 
 //global var
 var app = { one: [], two: [] };
@@ -567,11 +590,10 @@ var adjustBoxHeight = (function () {
 function scrollToEnv(){
   var id = $('#environmental-impact')
   var top = id.offset().top - 30 
-  $("html, body").animate({ scrollTop: top + "px" }, 1000);
+  $("html, body").animate({ scrollTop: top + "px" }, 1500);
 }
 
-$('#submit').click((e)=> {    
-  console.log(1)
+$('#submit').click((e)=> {      
   $(e.target).prop('disabled', true);
   updateAmount();
   scrollToEnv();  
