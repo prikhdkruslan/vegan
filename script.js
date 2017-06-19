@@ -287,8 +287,21 @@ function stockFacts3(stock, quantity, d) {
   ]
 }
 
-function getStock(key) {
-  return stocks[+key]
+function getStock(key) {  
+  var ori = stocks[+key]
+  var newObj = {}
+  for(var k in ori) {
+    if(ori.hasOwnProperty(k)) {
+      if(ori[k] instanceof Array) {
+        newObj[k] = ori[k].slice()
+      } else if(ori[k] instanceof Object) {
+        newObj[k] = Object.assign({}, ori[k])
+      } else {
+        newObj[k] = ori[k]
+      }
+    }    
+  }  
+  return newObj
 }
 
 function updateAmount() {
@@ -304,13 +317,12 @@ function updateAmount() {
     var accStock = {}
 
     if (id === 's1') {
-      list = app.one
+      list = app.one.slice()
     } else {
-      list = app.two
+      list = app.two.slice()
     }
-
-    if (list.length == 0) return
-
+console.log(1, stocks[0].name, stocks[0].calories[0])
+    if (list.length == 0) return    
     for (var i = 0; i < list.length; i++) {
       var key = list[i]
       var stock = getStock(key)
@@ -323,7 +335,6 @@ function updateAmount() {
         return typeof (prop) !== 'object' ? false : typeof prop[0] === 'number'
       }
 
-
       for (var key in stock) {
         if (stock.hasOwnProperty(key)) {
           var old = accStock[key]
@@ -331,11 +342,11 @@ function updateAmount() {
           // console.log(key, 'old: ' + old, ' --- new: ' + accStock[key])
         }
       }
+      console.log(2, stocks[0].name, stocks[0].calories[0])
     }
 
     dummy = '(' + dummy.substr(3) + ')'
     $amount.text(dummy)
-
     //$result.html(stockFacts(stock, amount))  
     selected.push(accStock)
   })
@@ -343,10 +354,8 @@ function updateAmount() {
   if($('#submit').attr('disabled') !== 'disabled') {
     return;
   }
-
   //$comparisonResult.empty()
   if (!selected[0] || !selected[1]) {
-
     toggleSegmentHideMe(true)
     //$comparisonResult.html(stockFacts(diff, quantity));
     $('#env_result').html('');
@@ -359,7 +368,6 @@ function updateAmount() {
   var difference = {};
   var diff = {}
   var d1 = [];
-
   Object.keys(selected[0]).forEach(function (k) {
     if (/^(key|name|servingUnit|unitsPerServing|group|icon)$/.test(k)) return
 
@@ -380,7 +388,7 @@ function updateAmount() {
 
   d1.push(Object.assign({}, selected[0]))
   d1.push(Object.assign({}, selected[1]))
-
+console.log(3, stocks[0].name, stocks[0].calories[0])
   toggleSegmentHideMe(false)
   //$comparisonResult.html(stockFacts(diff, quantity));  
   $('#env_result').html(stockFactsEnv(diff, quantity, d1));
@@ -524,12 +532,12 @@ $('.ui.dropdown').dropdown({
   onChange: (list, val, text) => {
     list = list || ""
     var id = $(val).data('id') || $(text).data('id')
-    //console.log(list, 'id:' + id, 'val: ' + val, text)
     if (id === 's1') {
       app.one = list.split(',').filter((i) => i)
     } else {
       app.two = list.split(',').filter((i) => i)
-    }
+    }   
+    
     //updateAmount();
     syncGroupHeaderHeight(id);
     submitReady()

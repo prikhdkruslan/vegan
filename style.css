@@ -81,6 +81,7 @@ button.navbar-toggle span.icon-bar {
 
 .fa.cow {
     width: 40px;
+    height: 40px!important;
     margin-right: 12px;
 }
 
@@ -186,6 +187,10 @@ i.ingredient.ch2:before{
   margin-top: 51px;
 }
 
+.stockSelect {
+    margin: 0 12px;
+}
+
 .main-form {
   background: url("./images/farm.jpg") no-repeat center;
   background-size: cover;      
@@ -229,7 +234,8 @@ i.ingredient.ch2:before{
     background: rgba(50, 153, 59, .8);
     box-shadow: 7px 5px 3px rgba(50, 100, 50, .8);
     flex: 1;
-    margin-top: -50px;
+    margin: 0 30px!important;
+    margin-top: -51px!important;
 }
 
 .result {
@@ -291,7 +297,8 @@ i.ingredient.ch2:before{
   }
 
   .fa.cow {
-      width: 19px;      
+      width: 19px;
+      height: 19px!important;
   }
   .ui.segment>table th {  
     padding: 18px 10px;  
