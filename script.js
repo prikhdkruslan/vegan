@@ -595,10 +595,9 @@ var adjustBoxHeight = (function () {
   })
 })()
 
-function scrollToEnv(){
-  var id = $('#environmental-impact')
-  var top = id.offset().top - 30 
-  $("html, body").animate({ scrollTop: top + "px" }, 1500);
+function scrollToEnv(){  
+  window.EVN_HASH = window.EVN_HASH ||  $('#environmental-impact').offset().top - 30 
+  $("html, body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
 }
 
 $('#submit').click((e)=> {      
