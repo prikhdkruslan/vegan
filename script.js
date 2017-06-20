@@ -321,7 +321,7 @@ function updateAmount() {
     } else {
       list = app.two.slice()
     }
-console.log(1, stocks[0].name, stocks[0].calories[0])
+  //console.log(1, stocks[0].name, stocks[0].calories[0])
     if (list.length == 0) return    
     for (var i = 0; i < list.length; i++) {
       var key = list[i]
@@ -342,7 +342,7 @@ console.log(1, stocks[0].name, stocks[0].calories[0])
           // console.log(key, 'old: ' + old, ' --- new: ' + accStock[key])
         }
       }
-      console.log(2, stocks[0].name, stocks[0].calories[0])
+      //console.log(2, stocks[0].name, stocks[0].calories[0])
     }
 
     dummy = '(' + dummy.substr(3) + ')'
@@ -388,7 +388,7 @@ console.log(1, stocks[0].name, stocks[0].calories[0])
 
   d1.push(Object.assign({}, selected[0]))
   d1.push(Object.assign({}, selected[1]))
-console.log(3, stocks[0].name, stocks[0].calories[0])
+  //console.log(3, stocks[0].name, stocks[0].calories[0])
   toggleSegmentHideMe(false)
   //$comparisonResult.html(stockFacts(diff, quantity));  
   $('#env_result').html(stockFactsEnv(diff, quantity, d1));
@@ -597,7 +597,12 @@ var adjustBoxHeight = (function () {
 
 function scrollToEnv(){  
   window.EVN_HASH = window.EVN_HASH ||  $('#environmental-impact').offset().top - 30 
-  $("html, body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
+  if(navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)){
+    //window.scrollTo(0, window.EVN_HASH);  
+    $("body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
+  } else {    
+    $("html, body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);  
+  }  
 }
 
 $('#submit').click((e)=> {      
