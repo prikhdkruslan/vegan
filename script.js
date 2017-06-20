@@ -598,8 +598,8 @@ var adjustBoxHeight = (function () {
 function scrollToEnv(){  
   window.EVN_HASH = window.EVN_HASH ||  $('#environmental-impact').offset().top - 30 
   if(navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)){
-    //window.scrollTo(0, window.EVN_HASH);  
-    $("body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
+    window.scrollTo(0, window.EVN_HASH);  
+    //$("body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
   } else {    
     $("html, body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);  
   }  
