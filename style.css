@@ -32,6 +32,13 @@ body{
   color: white!important;
 }
 
+.navbar-nav li>a:hover  {
+  background-color: #3b5909!important;
+}
+.navbar-nav li.active {
+  background-color: #3b5909!important;
+}
+
 .navbar.navbar-light li:hover>a {
   color: #4183c4!important;
 }
@@ -85,6 +92,66 @@ button.navbar-toggle span.icon-bar {
     margin-right: 12px;
 }
 
+.footer-bottom {
+    background-color: rgb(55, 78, 16);
+    min-height: 30px;
+    width: 100%;
+}
+
+.sub-vals {
+    position: relative;
+    font-size: 0.6em;
+    color: green;
+    border: 1px solid;
+    border-radius: 12px;
+    font-weight: bold;
+    top: -15px;
+    opacity: 0;
+    transition: all .5s linear;
+}
+
+.sub-vals.on {    
+    top: 5px;
+    opacity: 1;
+}
+
+.copyright {
+    color: #000;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+}
+.design {
+    color: #000;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+    text-align: right;
+}
+.design a {
+    color: #000;
+}
+
+.design a:hover {
+    color: #fff;
+}
+
+canvas {  
+  margin: 12px 0 -10px 25px;  
+  user-select: none;
+  width: 120px!important;
+  height: 120px!important;    
+}
+
+#chartjs-tooltip {
+  height: 220px!important;
+  width: 220px!important;
+}
+
+tbody tr{
+  cursor: pointer;
+}
+
 @media screen and (max-width: 480px) {
   .box{
     display : block;
@@ -95,6 +162,14 @@ button.navbar-toggle span.icon-bar {
     display : block;
     width : auto;
   }
+
+  .copyright {
+    text-align: center;
+   }
+  .design {
+    text-align: center;
+   }
+
 }
 
 .color-red{
@@ -113,6 +188,7 @@ button.navbar-toggle span.icon-bar {
   background: transparent;
 }
  
+
 /* Hide AddToAny vertical share bar when screen is less than 980 pixels wide */
 @media screen and (max-width: 980px) {
     .a2a_floating_style.a2a_vertical_style { display: none; }
@@ -168,7 +244,11 @@ i.ingredient.ch2:before{
 
 .ui.segment {
   margin-top: 10px!important;
-  display: none;    
+  display: none;        
+}
+
+.ui.segment.ads {
+    min-height: 100px;
 }
 
 .navbar-brand>img {
@@ -202,18 +282,25 @@ i.ingredient.ch2:before{
   display: flex;
 }
 .result {  
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
 }
 
-.row {
-  width: 100%;
+.row.row1 {
+  margin-bottom: 5px;
+  padding-left: 35px!important;
+}
+.row.row1 {
+  /*width: 70%;*/
+}
+.row.row2 {
+  /*width: 30%;*/
 }
 
-.col-lg-12 {
+.col-lg-12, .col-lg-8, .col-lg-4 {
   display: flex;
   align-content: center;
   justify-content: center;
@@ -292,10 +379,6 @@ i.ingredient.ch2:before{
       max-height: 25rem!important;
   }
 
-  .ui.segment {    
-    /*max-width: 90%;*/
-  }
-
   .fa.cow {
       width: 19px;
       height: 19px!important;
@@ -341,7 +424,7 @@ i.ingredient.ch2:before{
 @media only screen and (min-width: 992px){
   .ui.search.dropdown .menu {
       max-height: 25rem!important;
-  }
+  }    
 }
 @media only screen and (min-width: 768px){
   .ui.search.dropdown .menu {
@@ -358,6 +441,9 @@ i.ingredient.ch2:before{
 @media screen and (max-width: 950px) {
  .nav.navbar-nav {
     margin-left: 10vw;
+  }
+  .row.row1 {
+    padding-left: 0px!important;
   }
 }
 

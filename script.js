@@ -95,31 +95,31 @@ var $quantity = $('#numberOfStocks')
 
 function toLocale(num, dig) {
   var dig = typeof dig == "undefined" ? 2 : dig
-    if (typeof num == 'number')
-      return num.toLocaleString(undefined, {
-        minimumFractionDigits: dig,
-        maximumFractionDigits: dig
-      })
-  }
+  if (typeof num == 'number')
+    return num.toLocaleString(undefined, {
+      minimumFractionDigits: dig,
+      maximumFractionDigits: dig
+    })
+}
 
-function format(data, multiplier, digits, a, b, unit) {  
+function format(data, multiplier, digits, a, b, unit) {
   data = data.slice()
-  
+
   digits = unit == "$" ? 2 : digits
   data[0] = toLocale(+(data[0] * multiplier), digits) //.toFixed(digits)).toLocaleString();  
 
-  if (unit == "$") {    
+  if (unit == "$") {
     data[0] = ["$", data[0]].join(" ");
   }
 
-  if (a == "bad" && data[2] == " + ") {    
-      data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
+  if (a == "bad" && data[2] == " + ") {
+    data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
   }
 
-  if (a == "bad" && data[2] == " - ") {    
-      data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
+  if (a == "bad" && data[2] == " - ") {
+    data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
   }
-  
+
   else if (a == "good" && data[2] == " - ") {
     data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
   }
@@ -139,11 +139,11 @@ function format(data, multiplier, digits, a, b, unit) {
     data[0] = "<span class='color-green'>" + data[2] + " " + data[0] + "</span>"
   }
 
-  if(b == 'preserve') {
+  if (b == 'preserve') {
     var a = "<span class='color-green'>"
     var b = "<span class='color-red'>"
-    
-    if(data[0].indexOf(a) > -1) {
+
+    if (data[0].indexOf(a) > -1) {
       data[0] = data[0].replace(a, b)
     } else {
       data[0] = data[0].replace(b, a)
@@ -151,12 +151,12 @@ function format(data, multiplier, digits, a, b, unit) {
   }
 
   data[1] = "<span style='color:#212121'>" + data[1] + "</span>"
-  var temp = [];  
+  var temp = [];
   temp = [data[0], data[1]];
-  
+
   return temp.join(' ');
 }
-  
+
 function Row(val, desc, c) {
   var one = (c.length > 2) ? toLocale(c[0][0] * c[2]) : 0
   var two = (c.length > 2) ? toLocale(c[1][0] * c[2]) : 0
@@ -164,14 +164,13 @@ function Row(val, desc, c) {
   var td = `
       <tr>
         <td class="collapsing" style="white-space: nowrap; text-align:center">        
-          <div class="ui green basic button" data-first="${one}" data-second="${two}">
-            <span class="badge">${one}</span>          
-            <i class="vals">${val}</i>
-            <span class="badge">${two}</span>
+          <div class="ui green basic button" data-first="${one}" data-second="${two}">                        
+            <i class="vals">${val}</i>                        
           </div>        
+          <div class="sub-vals">${one} vs ${two}</div>
         </td>
-        <td class="collapsing" style="width:100%; text-align:center">
-          ${desc}
+        <td class="collapsing btn-item" style="width:100%; text-align:center" data-first="${one}" data-second="${two}">
+          ${desc} <canvas></canvas>
         </td>         
       </tr>
   `
@@ -287,20 +286,20 @@ function stockFacts3(stock, quantity, d) {
   ]
 }
 
-function getStock(key) {  
+function getStock(key) {
   var ori = stocks[+key]
   var newObj = {}
-  for(var k in ori) {
-    if(ori.hasOwnProperty(k)) {
-      if(ori[k] instanceof Array) {
+  for (var k in ori) {
+    if (ori.hasOwnProperty(k)) {
+      if (ori[k] instanceof Array) {
         newObj[k] = ori[k].slice()
-      } else if(ori[k] instanceof Object) {
+      } else if (ori[k] instanceof Object) {
         newObj[k] = Object.assign({}, ori[k])
       } else {
         newObj[k] = ori[k]
       }
-    }    
-  }  
+    }
+  }
   return newObj
 }
 
@@ -321,8 +320,8 @@ function updateAmount() {
     } else {
       list = app.two.slice()
     }
-  //console.log(1, stocks[0].name, stocks[0].calories[0])
-    if (list.length == 0) return    
+    //console.log(1, stocks[0].name, stocks[0].calories[0])
+    if (list.length == 0) return
     for (var i = 0; i < list.length; i++) {
       var key = list[i]
       var stock = getStock(key)
@@ -351,7 +350,7 @@ function updateAmount() {
     selected.push(accStock)
   })
 
-  if($('#submit').attr('disabled') !== 'disabled') {
+  if ($('#submit').attr('disabled') !== 'disabled') {
     return;
   }
   //$comparisonResult.empty()
@@ -396,6 +395,8 @@ function updateAmount() {
   $('#soc_result').html(stockFactsSocial(diff, quantity, d1));
   $('#year_result').html(stockFacts2(diff, quantity * 365, d1));
   $('#US_result').html(stockFacts3(diff, quantity * 323148587, d1));
+
+  btnItemListener()
 }
 
 var groups = ((s) => {
@@ -523,7 +524,7 @@ $('.stockSelect').each((i, elm) => {
   $(elm).append(DropDown(id))
 })
 
-function submitReady(){
+function submitReady() {
   $('#submit').prop('disabled', false)
   updateAmount()
 }
@@ -536,8 +537,8 @@ $('.ui.dropdown').dropdown({
       app.one = list.split(',').filter((i) => i)
     } else {
       app.two = list.split(',').filter((i) => i)
-    }   
-    
+    }
+
     //updateAmount();
     syncGroupHeaderHeight(id);
     submitReady()
@@ -576,7 +577,9 @@ function toggleSegmentHideMe(b) {
     $('.box-1').animate({
       paddingTop: "0.3in"
     }, 500);
+    $('.result').hide()
   } else if (!b && $seg.is(':hidden')) {
+    $('.result').css('display', 'flex')
     $seg.slideDown(1000)
     $('.box-1').animate({
       paddingTop: "0"
@@ -588,56 +591,61 @@ toggleSegmentHideMe(true)
 
 //set default height of each column
 var adjustBoxHeight = (function () {
-  var box = $('.ui.segment, .main-form'),
+  var box = $('.ui.segment, .main-form').not('.ads'),
     h = $(window).height()         //screen.availHeight - 45
   box.css({
     'min-height': h
   })
 })()
 
-function scrollToEnv(){  
-  window.EVN_HASH = window.EVN_HASH ||  $('#environmental-impact').offset().top - 30 
-  if(navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)){
-    window.scrollTo(0, window.EVN_HASH);  
-    //$("body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
-  } else {    
-    $("html, body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);  
-  }  
+function scrollToEnv() {
+  window.EVN_HASH = window.EVN_HASH || $('#environmental-impact').offset().top - 30
+  if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)) {
+    $({ scrollTop: window.scroll }).animate({ scrollTop: window.EVN_HASH }, {
+      duration: 1000,
+      easing: 'swing',
+      step: function (val) {
+        window.scrollTo(0, val);
+      }
+    });
+  } else {
+    $("html, body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
+  }
 }
 
-$('#submit').click((e)=> {      
+$('#submit').click((e) => {
   $(e.target).prop('disabled', true);
   updateAmount();
-  scrollToEnv();  
+  scrollToEnv();
   e.preventDefault()
 })
 
-function scroller() {  
-  if(app.one.length == 0 || app.two.length == 0) {
+function scroller() {
+  if (app.one.length == 0 || app.two.length == 0) {
     return
   }
-  if(window.isWaiting || typeof window.isWaiting === 'undefined') {
+  if (window.isWaiting || typeof window.isWaiting === 'undefined') {
     clearTimeout(window.isWaiting)
-    window.isWaiting = setTimeout(()=> {
+    window.isWaiting = setTimeout(() => {
       window.isWaiting = undefined
       scrollToEnv()
     }, 3500)
     return
-  }      
+  }
 }
 
 function syncGroupHeaderHeight(id) {
   var list = [];
-  if(id === 's1') {
-    list = app.one.map((i)=>Number(i))
+  if (id === 's1') {
+    list = app.one.map((i) => Number(i))
   } else {
-    list = app.two.map((i)=>Number(i))
+    list = app.two.map((i) => Number(i))
   }
   $selects.each((i, elm) => {
     if ($(elm).attr('id') === id) {
       $(elm).find('.menu.sub.transition').each((i, ul) => {
         var hi = 0;
-        $(ul).find('.item, .header').each((i, li) => {          
+        $(ul).find('.item, .header').each((i, li) => {
           var val = $(li).data('value');
           //console.log(list, val)
           if (!(list.indexOf(val) > -1)) {
@@ -645,11 +653,84 @@ function syncGroupHeaderHeight(id) {
               var t = $(li).data('pos')
               $(li).data('pos', hi)
               //console.log(li, 'from', t, $(li).data('pos'))              
-            }              
+            }
             hi = hi + 45
           }
         })
       })
     }
-  })  
+  })
+}
+
+function insertBar(elm, a, b) {
+  var ctx = elm;
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ["1st", "2nd"],
+      datasets: [{        
+        data: [a, b],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {      
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      legend: {
+        display: false
+      },
+      tooltips: { 
+        enabled: false,        
+        // bodyFontSize: 80,        
+        // xPadding: 12,      
+        // yPadding: 12      
+      },      
+      hover: { mode: null },      
+    }
+  });
+
+}
+
+function btnItemListener() {
+  $('tbody tr').off('click').on('click', function (e) {
+    var target = $(e.target).closest('tr').find('td.btn-item').eq(0)
+        target1 = $(target),
+        target2 = target1.find('canvas')
+        console.log(target)
+    if (target2.length > 0) {
+      var a = target1.data('first'),
+        b = target1.data('second')
+      target2.eq(0).css('display', 'inline')
+      target2.eq(0).off('mouseover').on('mouseover', function (el) {
+        var v = $(e.target).closest('tr').find('.sub-vals')
+        if(v.length > 0) {
+          if(!v.eq(0).hasClass('on')) {
+            v.eq(0).addClass('on')
+          }
+        }
+        //$(el.target).css({'width': "200px!important", 'height': "200px!important"})
+      })
+      insertBar(target2[0], a, b)
+    }
+  })
+
+  var start = (function () {
+    $('canvas').hide()
+    // Chart.defaults.global.tooltips = {
+    //   titleFontSize: 12
+    // }
+  })()
 }
