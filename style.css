@@ -3,7 +3,7 @@
   margin : 0;
 }
 body{  
-  background-color: #F8F8FF;  
+  overflow-y: hidden;
 }
 
 .topnav {
@@ -92,12 +92,6 @@ button.navbar-toggle span.icon-bar {
     margin-right: 12px;
 }
 
-.footer-bottom {
-    background-color: rgb(55, 78, 16);
-    min-height: 30px;
-    width: 100%;
-}
-
 .sub-vals {
     position: relative;
     font-size: 0.6em;
@@ -115,6 +109,12 @@ button.navbar-toggle span.icon-bar {
     opacity: 1;
 }
 
+.footer-bottom {
+    background-color: rgb(55, 78, 16);
+    min-height: 30px;
+    width: 100%;    
+}
+
 .copyright {
     color: #000;
     line-height: 30px;
@@ -126,7 +126,7 @@ button.navbar-toggle span.icon-bar {
     line-height: 30px;
     min-height: 30px;
     padding: 7px 0;
-    text-align: right;
+    text-align: right;    
 }
 .design a {
     color: #000;
@@ -245,6 +245,14 @@ i.ingredient.ch2:before{
 .ui.segment {
   margin-top: 10px!important;
   display: none;        
+  background: rgba(255, 255, 255, .5)!important;
+  -webkit-transition: all .2s linear;
+  -moz-transition: all .2s linear;
+  transition: all .2s linear;
+}
+
+.ui.segment:hover {
+  background: rgba(255, 255, 255, 1)!important;
 }
 
 .ui.segment.ads {
@@ -259,12 +267,26 @@ i.ingredient.ch2:before{
   margin-left: 27vw;
 }
 
-.main-container{ 
-  display: flex; 
+#main-container{ 
+  /*display: flex; */
   flex-direction:column;    
   align-items: center;
   justify-content: center;
   margin-top: 51px;
+
+  background: url("./images/farm.jpg") no-repeat center!important;  
+  background-size: auto auto;
+  background-size: cover;
+  position: relative;
+  width: 100vw;
+  height: 100px;
+  align-self: center;
+  background-attachment: fixed;    
+  height: 100vh;  
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  padding-bottom: 45px;
 }
 
 .stockSelect {
@@ -272,8 +294,8 @@ i.ingredient.ch2:before{
 }
 
 .main-form {
-  background: url("./images/farm.jpg") no-repeat center;
-  background-size: cover;      
+  /*background: url("./images/farm.jpg") no-repeat center;
+  background-size: cover;      */
   position: relative;
   width: 100vw;
   height: 100px;

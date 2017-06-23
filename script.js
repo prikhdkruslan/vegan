@@ -170,7 +170,7 @@ function Row(val, desc, c) {
           <div class="sub-vals">${one} vs ${two}</div>
         </td>
         <td class="collapsing btn-item" style="width:100%; text-align:center" data-first="${one}" data-second="${two}">
-          ${desc} <canvas></canvas>
+          ${desc} <br> <canvas></canvas>
         </td>         
       </tr>
   `
@@ -599,18 +599,19 @@ var adjustBoxHeight = (function () {
 })()
 
 function scrollToEnv() {
-  window.EVN_HASH = window.EVN_HASH || $('#environmental-impact').offset().top - 30
-  if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)) {
-    $({ scrollTop: window.scroll }).animate({ scrollTop: window.EVN_HASH }, {
-      duration: 1000,
-      easing: 'swing',
-      step: function (val) {
-        window.scrollTo(0, val);
-      }
-    });
-  } else {
-    $("html, body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
-  }
+  window.EVN_HASH = window.EVN_HASH || $('#environmental-impact').offset().top - 50
+  // if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)) {
+  //   $({ scrollTop: window.scroll }).animate({ scrollTop: window.EVN_HASH }, {
+  //     duration: 1000,
+  //     easing: 'swing',
+  //     step: function (val) {
+  //       window.scrollTo(0, val);
+  //     }
+  //   });
+  // } else {
+  //   $("html, body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
+  // }
+  $("#main-container").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
 }
 
 $('#submit').click((e) => {
