@@ -710,7 +710,7 @@ function btnItemListener() {
     var target = $(e.target).closest('tr').find('td.btn-item').eq(0)
         target1 = $(target),
         target2 = target1.find('canvas')
-        console.log(target)
+        // console.log(target)
     if (target2.length > 0) {
       var a = target1.data('first'),
         b = target1.data('second')

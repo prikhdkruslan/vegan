@@ -139,8 +139,8 @@ button.navbar-toggle span.icon-bar {
 canvas {  
   margin: 12px 0 -10px 25px;  
   user-select: none;
-  width: 120px!important;
-  height: 120px!important;    
+  width: 200px!important;
+  height: 200px!important;    
 }
 
 #chartjs-tooltip {
