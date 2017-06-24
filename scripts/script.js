@@ -158,8 +158,10 @@ function format(data, multiplier, digits, a, b, unit) {
 }
 
 function Row(val, desc, c) {
-  var one = (c.length > 2) ? toLocale(c[0][0] * c[2]) : 0
-  var two = (c.length > 2) ? toLocale(c[1][0] * c[2]) : 0
+  var one = (c.length > 2) ? c[0][0] * c[2] : 0,
+      two = (c.length > 2) ? c[1][0] * c[2] : 0,
+      one_s = toLocale(one),
+      two_s = toLocale(two)
 
   var td = `
       <tr>
@@ -167,7 +169,7 @@ function Row(val, desc, c) {
           <div class="ui green basic button" data-first="${one}" data-second="${two}">                        
             <i class="vals">${val}</i>                        
           </div>        
-          <div class="sub-vals">${one} vs ${two}</div>
+          <div class="sub-vals">${one_s} vs ${two_s}</div>
         </td>
         <td class="collapsing btn-item" style="width:100%; text-align:center" data-first="${one}" data-second="${two}">
           ${desc} <br> <canvas></canvas>
@@ -663,12 +665,21 @@ function syncGroupHeaderHeight(id) {
   })
 }
 
-function insertBar(elm, a, b) {
+function insertBar(elm, a, b) {    
+    var h = a > b ? a : b,  
+      step = parseInt(h / 3),
+      w = $(window).width(),
+      fSize = 40;
+
+      if(w < 700) {
+        fSize = 12
+        console.log(fSize)
+      }      
   var ctx = elm;
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ["1st", "2nd"],
+       labels: ["1st", "2nd"],
       datasets: [{        
         data: [a, b],
         backgroundColor: [
@@ -684,10 +695,23 @@ function insertBar(elm, a, b) {
     },
     options: {      
       scales: {
+        margin: {
+          left: 12,
+          right: 12
+        },
         yAxes: [{
           ticks: {
-            beginAtZero: true
+            responsive: false,
+            beginAtZero: false, 
+            scaleOverride:true,           
+            steps: 1,
+            stepValue: 3,
+            // max: h,
+            fontSize: fSize
           }
+        }],
+        xAxes: [{
+          display: false,
         }]
       },
       legend: {
@@ -715,15 +739,15 @@ function btnItemListener() {
       var a = target1.data('first'),
         b = target1.data('second')
       target2.eq(0).css('display', 'inline')
-      target2.eq(0).off('mouseover').on('mouseover', function (el) {
+      // target2.eq(0).off('mouseover').on('mouseover', function (el) {
         var v = $(e.target).closest('tr').find('.sub-vals')
         if(v.length > 0) {
           if(!v.eq(0).hasClass('on')) {
             v.eq(0).addClass('on')
           }
         }
-        //$(el.target).css({'width': "200px!important", 'height': "200px!important"})
-      })
+      //   //$(el.target).css({'width': "200px!important", 'height': "200px!important"})
+      // })
       insertBar(target2[0], a, b)
     }
   })

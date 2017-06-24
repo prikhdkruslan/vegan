@@ -113,8 +113,13 @@ button.navbar-toggle span.icon-bar {
     background-color: rgb(55, 78, 16);
     min-height: 30px;
     width: 100%;    
+    position: absolute;
 }
 
+.container {
+  margin-bottom: 40px;
+  padding: 7px 0;
+}
 .copyright {
     color: #000;
     line-height: 30px;
@@ -144,8 +149,8 @@ canvas {
 }
 
 #chartjs-tooltip {
-  height: 220px!important;
-  width: 220px!important;
+  height: 120px!important;
+  width: 120px!important;
 }
 
 tbody tr{
@@ -195,46 +200,6 @@ tbody tr{
 }
 
 
-i.ingredient:not(.icon) {
-    display: inline-block;
-    width: 16px;
-    height: 13px;
-    line-height: 13px;
-    vertical-align: baseline;
-    margin: 0 1em 0 0;
-    text-decoration: inherit;
-    speak: none;
-    font-smoothing: antialiased;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;    
-}
-
-i.ingredient:not(.icon):before {
-    display: inline;
-    content: '';
-    background: url(images/ingredients.jpg) no-repeat -150px -150px;
-    width: 25px;
-    border-radius: 15px;
-    height: 25px;    
-    position: absolute;
-    top: 6px;
-}
-
-i.ingredient.bf1:before {
-    background-position: -2px 2px;
-}
-
-i.ingredient.bf2:before{
-    background-position: -35px 2px;
-}
-i.ingredient.ch1:before{
-    background-position: 2px -13px;
-}
-i.ingredient.ch2:before{
-    background-position: -2px -31px;
-}
-
-
 .ui.multiple.selection.dropdown .menu.sub {
   overflow-x: visible!important;
   overflow-y: auto;
@@ -245,14 +210,43 @@ i.ingredient.ch2:before{
 .ui.segment {
   margin-top: 10px!important;
   display: none;        
-  background: rgba(255, 255, 255, .5)!important;
+  /*background: rgba(255, 255, 255, .5)!important;*/  
   -webkit-transition: all .2s linear;
   -moz-transition: all .2s linear;
   transition: all .2s linear;
 }
 
+.ui.segment:not(.ads) {
+  max-width: 94vw;  
+  overflow-x: scroll;  
+}
+
+
+
+element {
+
+    min-height: 477px;
+    display: block;
+
+}
+.ui.segment:last-child {
+
+    margin-bottom: 0;
+
+}
+.ui.segment:first-child {
+
+    margin-top: 0;
+
+}
 .ui.segment:hover {
-  background: rgba(255, 255, 255, 1)!important;
+
+    background: rgba(255, 255, 255, 1) !important;
+
+}
+
+.ui.segment:hover {
+  /*background: rgba(255, 255, 255, 1)!important;*/
 }
 
 .ui.segment.ads {
@@ -274,7 +268,7 @@ i.ingredient.ch2:before{
   justify-content: center;
   margin-top: 51px;
 
-  background: url("./images/farm.jpg") no-repeat center!important;  
+  background: url("../images/farm.jpg") no-repeat center!important;  
   background-size: auto auto;
   background-size: cover;
   position: relative;
@@ -474,6 +468,11 @@ i.ingredient.ch2:before{
     /*margin-left: calc(-4vw);
     margin-right: calc(10vw);*/
   }  
+  .ui.segment:not(.ads) {
+    min-width: 94vw;    
+    margin-left: auto !important;
+    margin-right: auto !important;    
+  }
 }
 
 @media screen and (max-width: 320px) {
