@@ -146,6 +146,8 @@ canvas {
   user-select: none;
   width: 200px!important;
   height: 200px!important;    
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #chartjs-tooltip {
@@ -217,11 +219,12 @@ tbody tr{
 }
 
 .ui.segment:not(.ads) {
-  max-width: 94vw;  
   overflow-x: scroll;  
 }
 
-
+.ui.segment {
+  max-width: 94vw;  
+}
 
 element {
 
@@ -309,6 +312,9 @@ element {
   margin-bottom: 5px;
   padding-left: 35px!important;
 }
+.side-ads {
+  transition: all 1s linear;
+}
 .row.row1 {
   /*width: 70%;*/
 }
@@ -316,12 +322,13 @@ element {
   /*width: 30%;*/
 }
 
-.col-lg-12, .col-lg-8, .col-lg-4 {
+/*.col-lg-12, .col-lg-8 {
   display: flex;
   align-content: center;
   justify-content: center;
   flex-direction: column;
-}
+}*/
+
 .box-1{        
     text-align: center;
     width: 100%;

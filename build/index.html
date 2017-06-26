@@ -10,7 +10,7 @@
   <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
 
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 </head>
 
 <body>
@@ -74,134 +74,140 @@
 
     <div id="environmental-impact" class="container result">
       <div class="row row1">
-        <div class="col-lg-8">
-          <div class="ui segment">
-            <table class="celled striped table table-hover">
-              <thead>
-                <tr>
-                  <th colspan="2">
-                    <i class="fa fa-car" style="color:#A9A9A9"></i> Environmental Impact:
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="env_result">
-              </tbody>
-            </table>
+        <div class="col-lg-8 col-md-8 col-xs-12">
+          <!-- start result -->
+          <div class="col-lg-12">
+            <div class="ui segment">
+              <table class="celled striped table table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="2">
+                      <i class="fa fa-car" style="color:#A9A9A9"></i> Environmental Impact:
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="env_result">
+                </tbody>
+              </table>
+            </div>
           </div>
+
+          <div class="col-lg-12">
+            <div class="ui segment">
+              <table class="celled striped table table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="2">
+                      <i class="fa fa-heartbeat" style="color:#FF69B4"></i> Health Impact:
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="health_result">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="ui segment ads">
+              <!--put ads here-->
+              Advertisements
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="ui segment">
+              <table class="celled striped table table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="2">
+                      <img class="fa cow" src="./images/cow-frontal-head.svg" style="height: 100%;" /> Social Impact:
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="soc_result">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="ui segment">
+              <table class="celled striped table table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="2">
+                      Impact of making this switch everyday for a year
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="year_result">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="ui segment ads">
+              <!--put ads here-->
+              Advertisements
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="ui segment">
+              <table class="celled striped table table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="2">
+                      Impact of everyone in the US making this switch just <b>once</b>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="US_result">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-lg-12" data-spy="affix" data-offset-top="197">
+            <div class="ui segment ads">
+              <!--put ads here-->
+              Advertisements
+            </div>
+          </div>
+          <!-- end result -->
         </div>
-          
-        <div class="col-lg-4 visible-lg">
+
+        <div id="side-ads" class="col-lg-4 col-md-4 hidden-xs side-ads">
+          <!--visible-lg-->
           <div class="ui segment ads">
             <!--put ads here-->
-            Sidebar Advertisements            
+            Sidebar Advertisements
           </div>
         </div>
 
-        <div class="col-lg-12">
-          <div class="ui segment">
-            <table class="celled striped table table-hover">
-              <thead>
-                <tr>
-                  <th colspan="2">
-                    <i class="fa fa-heartbeat" style="color:#FF69B4"></i> Health Impact:
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="health_result">
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="col-lg-12">
-          <div class="ui segment ads">
-            <!--put ads here-->
-            Advertisements            
-          </div>
-        </div>
-
-        <div class="col-lg-12">
-          <div class="ui segment">
-            <table class="celled striped table table-hover">
-              <thead>
-                <tr>
-                  <th colspan="2">
-                    <img class="fa cow" src="./images/cow-frontal-head.svg" style="height: 100%;" /> Social Impact:
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="soc_result">
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="col-lg-12">
-          <div class="ui segment">
-            <table class="celled striped table table-hover">
-              <thead>
-                <tr>
-                  <th colspan="2">
-                    Impact of making this switch everyday for a year
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="year_result">
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="col-lg-12">
-          <div class="ui segment ads">
-            <!--put ads here-->
-            Advertisements            
-          </div>
-        </div>
-
-        <div class="col-lg-12">
-          <div class="ui segment">
-            <table class="celled striped table table-hover">
-              <thead>
-                <tr>
-                  <th colspan="2">
-                    Impact of everyone in the US making this switch just <b>once</b>
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="US_result">
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
-        <div class="col-lg-12">
-          <div class="ui segment ads">
-            <!--put ads here-->
-            Advertisements
-          </div>
-        </div>        
-
-      </div> <!--end of row1-->
+      </div>
+      <!--end of row1-->
     </div>
     <div class="footer-bottom">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <div class="copyright">
-            © 2017, ____, All rights reserved
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="copyright">
+              © 2017, ____, All rights reserved
+            </div>
           </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <div class="design">
-            <a href="#">Link1 </a> | <a target="_blank" href="">link2</a>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="design">
+              <a href="#">Link1 </a> | <a target="_blank" href="">link2</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
-  
+
   <div class="a2a_kit a2a_kit_size_32 a2a_floating_style a2a_vertical_style" style="left:0px; top:150px;">
     <a class="a2a_button_facebook"></a>
     <a class="a2a_button_twitter"></a>
@@ -217,7 +223,8 @@ crossorigin="anonymous"></script>-->
   <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>-->
   <script src="scripts/bootstrap.min.js"></script>
-  <script src="semantic/dist/semantic.min.js"></script>
+  <!--<script src="semantic/dist/semantic.min.js"></script>-->
+  <script src="scripts/semantic.min.js"></script>
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>-->
   <script src="scripts/Chart.min.js"></script>
   <script src="./api/stocks.js"></script>
