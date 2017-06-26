@@ -617,11 +617,16 @@ function insertBar(elm, a, b) {
     var h = a > b ? a : b,  
       step = parseInt(h / 3),
       w = $(window).width(),
-      fSize = 40,
+      fSize = 25,
       barWidth = 90,
       padd = 50,
       categoryPercentage = 0.9,
-      barPercentage = 0.8;
+      barPercentage = 0.8,
+      bZero = false;
+
+      if ((a + b) == 0) {
+        bZero = true
+      }
 
       if(w < 700) {
         fSize = 12 
@@ -662,14 +667,20 @@ function insertBar(elm, a, b) {
         yAxes: [{
           ticks: {
             responsive: false,
-            beginAtZero: false, 
+            beginAtZero: bZero, 
             scaleOverride:true,           
             steps: 12,
             stepValue: step,    
-            //max: h,
+            //max: h,            
             fontSize: fSize,
             padding: padd,
-            callback: function(value) {return value.toLocaleString()}
+            callback: function(value) {return value.toLocaleString()},
+            userCallback: function(label, index, labels) {              
+              if (Math.floor(label) === label) {
+                  return label.toLocaleString();
+              }
+
+            },
           }
         }],
         xAxes: [{
@@ -738,8 +749,7 @@ function scroller() {
 }
 
 function togglePos(){  
-  var aTop = window.aTop
-  console.log($("#main-container").scrollTop(), aTop)
+  var aTop = window.aTop  
     if ($("#main-container").scrollTop() >= aTop) {
      $('#side-ads').css( "position", "fixed" );
      $('#side-ads').css({"top":"19%", right:"12px"} );     
