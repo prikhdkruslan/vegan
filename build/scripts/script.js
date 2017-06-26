@@ -619,12 +619,20 @@ function insertBar(elm, a, b) {
       w = $(window).width(),
       fSize = 40,
       barWidth = 90,
-      padd = 50;
+      padd = 50,
+      categoryPercentage = 0.9,
+      barPercentage = 0.8;
 
       if(w < 700) {
         fSize = 12 
         barWidth = 30
         padd = 5
+
+        if(h > 1000) {
+          barWidth = 15
+          categoryPercentage= 1,
+          barPercentage= 1;
+        }
         // $canv.css({width: "150px!important", height: "200px!important"})        
       }
   var ctx = elm;
@@ -666,7 +674,9 @@ function insertBar(elm, a, b) {
         }],
         xAxes: [{
           display: false,
-          barThickness : barWidth
+          barThickness : barWidth,
+          categoryPercentage: categoryPercentage,
+          barPercentage: barPercentage
         }]
       },
       legend: {
