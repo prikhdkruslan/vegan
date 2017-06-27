@@ -613,17 +613,21 @@ function syncGroupHeaderHeight(id) {
 }
 // $canv.css({width: "200px!important", height: "200px!important"})   
 
+// Chart.defaults.global.defaultFontSize = '25';
+
 function insertBar(elm, a, b) {    
     var h = a > b ? a : b,  
       step = parseInt(h / 3),
       w = $(window).width(),
-      fSize = 25,
+      fSize = fSize,
       barWidth = 90,
       padd = 50,
       categoryPercentage = 0.9,
       barPercentage = 0.8,
-      bZero = false;
-
+      bZero = true;
+      
+      $(elm).css({width: "300px!important", height: "200px!important"})        
+      
       if ((a + b) == 0) {
         bZero = true
       }
@@ -632,14 +636,15 @@ function insertBar(elm, a, b) {
         fSize = 12 
         barWidth = 30
         padd = 5
+        categoryPercentage= 1,
+        barPercentage= 1.0;
+
+        $(elm).css({width: "50px!important", height: "150px!important"})        
 
         if(h > 1000) {
-          barWidth = 15
-          categoryPercentage= 1,
-          barPercentage= 1;
-        }
-        // $canv.css({width: "150px!important", height: "200px!important"})        
-      }
+          barWidth = 15          
+        }        
+      }    
   var ctx = elm;
   var myChart = new Chart(ctx, {
     type: 'bar',
@@ -658,7 +663,10 @@ function insertBar(elm, a, b) {
         borderWidth: 1
       }]
     },
-    options: {      
+    options: {              
+      layout: {
+        padding: 12
+      }, 
       scales: {
         margin: {
           left: 12,
@@ -668,13 +676,14 @@ function insertBar(elm, a, b) {
           ticks: {
             responsive: false,
             beginAtZero: bZero, 
-            scaleOverride:true,           
-            steps: 12,
-            stepValue: step,    
+            scaleOverride:true,                       
+            max: h,
+            min: 0,
+            stepSize: step,    
             //max: h,            
             fontSize: fSize,
             padding: padd,
-            callback: function(value) {return value.toLocaleString()},
+            // callback: function(value) {return value.toLocaleString()},
             userCallback: function(label, index, labels) {              
               if (Math.floor(label) === label) {
                   return label.toLocaleString();
@@ -685,9 +694,9 @@ function insertBar(elm, a, b) {
         }],
         xAxes: [{
           display: false,
-          barThickness : barWidth,
+          // barThickness : barWidth,          
           categoryPercentage: categoryPercentage,
-          barPercentage: barPercentage
+          barPercentage: barPercentage,          
         }]
       },
       legend: {
@@ -744,7 +753,7 @@ function scroller() {
   clearTimeout(window.isWaiting)
   window.isWaiting = setTimeout(() => {    
     togglePos()
-  }, 200)
+  }, 100)
     
 }
 
@@ -763,3 +772,4 @@ $(function() {
     scroller()
   });
 });
+

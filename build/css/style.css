@@ -33,22 +33,18 @@ body{
 }
 
 .navbar-nav li>a:hover  {
-  background-color: #3b5909!important;
+  background-color: #21ba45!important;
 }
 .navbar-nav li.active {
-  background-color: #3b5909!important;
+  background-color: #21ba45!important;
 }
 
 .navbar.navbar-light li:hover>a {
-  color: #4183c4!important;
+  /*color: #4183c4!important;*/
 }
 
 .nav.navbar-nav li.active:hover>a {
   color: white!important;
-}
-
-.nav>li>a:focus, .nav>li>a:hover {
-    background-color: #173;
 }
 
 button.navbar-toggle.collapsed span.icon-bar {
@@ -144,10 +140,11 @@ button.navbar-toggle span.icon-bar {
 canvas {  
   margin: 12px 0 -10px 25px;  
   user-select: none;
-  width: 150px!important;
-  height: 150px!important;    
+  /*width: 150px!important;
+  height: 150px!important;    */
   margin-left: auto;
   margin-right: auto;
+  padding: 0 12px;
 }
 
 #chartjs-tooltip {
@@ -487,3 +484,9 @@ element {
     /*margin-left: calc(-9vw);    */
   }  
 }
+
+
+/*ads*/
+.side-ads { width: 400px; height: 800px!important; }
+/*@media(min-width: 500px) { .side-ads { width: 468px; height: 60px; } }
+@media(min-width: 800px) { .side-ads { width: 728px; height: 90px; } }*/
