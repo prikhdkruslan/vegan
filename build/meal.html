@@ -44,8 +44,8 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Ingredient Calculator <span class="sr-only">(current)</span></a></li>
-          <li><a href="/meal.html">Meal Calculator</a></li>
+          <li><a href="/">Ingredient Calculator <span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="/meal.html">Meal Calculator</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="#sources">Sources</a></li>
@@ -65,18 +65,23 @@
             <input type="number" id="numberOfStocks" value="1" min="1" style="text-align: center; max-width: 200px;" />
           </div>
           <div class="field">
-            <label>The impact of eating <br>
+            <label>Breakfast <br>
           <span class="servingUnit"></span>
           </label>
             <div id="s1" class="stockSelect"></div>
           </div>
           <div class="field">
-            <label>vs <br>
+            <label>Lunch <br>
             <span class="servingUnit"></span></label>
             <div id="s2" class="stockSelect"></div>
           </div>
           <div class="field">
-            <button id="submit" class="ui inverted yellow basic button" style="margin-top: 35px; padding:11px 17px;">Submit</button>
+            <label>Dinner <br>
+            <span class="servingUnit"></span></label>
+            <div id="s3" class="stockSelect"></div>
+          </div>
+          <div class="field">
+            <button id="submit-meal" class="ui inverted yellow basic button" style="margin-top: 35px; padding:11px 17px;">Submit</button>
           </div>
         </form>
       </div>

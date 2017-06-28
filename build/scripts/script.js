@@ -24,6 +24,7 @@ function Stock(data, i) {
   }
 }
 stocks = stocks.map(Stock)
+stocksUs = stocksUs.map(Stock)
 
 //var $selects = $('.selectStock')
 var $selects = $('.stockSelect')
@@ -102,9 +103,9 @@ function format(data, multiplier, digits, a, b, unit) {
 
 function Row(val, desc, c) {
   var one = (c.length > 2) ? c[0][0] * c[2] : 0,
-      two = (c.length > 2) ? c[1][0] * c[2] : 0,
-      one_s = one.toLocaleString(),
-      two_s = two.toLocaleString()
+    two = (c.length > 2) ? c[1][0] * c[2] : 0,
+    one_s = one.toLocaleString(),
+    two_s = two.toLocaleString()
 
   var td = `
       <tr>
@@ -249,9 +250,10 @@ function getStock(key) {
   return newObj
 }
 
-function updateAmount() {
+function updateAmount(isMeal) {
   var quantity = +$quantity.val()
   var selected = []
+  isMeal = isMeal || false
 
   $selects.each(function (i, elm) {
     var id = $(elm).attr("id")
@@ -263,8 +265,10 @@ function updateAmount() {
 
     if (id === 's1') {
       list = app.one.slice()
-    } else {
+    } else if (id === "s2") {
       list = app.two.slice()
+    } else {
+      list = app.three.slice()
     }
     //console.log(1, stocks[0].name, stocks[0].calories[0])
     if (list.length == 0) return
@@ -296,11 +300,12 @@ function updateAmount() {
     selected.push(accStock)
   })
 
-  if ($('#submit').attr('disabled') !== 'disabled') {
+  if (($('#submit').length > 0 && $('#submit').attr('disabled') !== 'disabled') || ($('#submit-meal').length > 0 && $('#submit-meal').attr('disabled') !== 'disabled')) {
     return;
   }
+
   //$comparisonResult.empty()
-  if (!selected[0] || !selected[1]) {
+  if ((!isMeal && (!selected[0] || !selected[1])) || (isMeal && (!selected[0] || !selected[1] || !selected[2]))) {
     toggleSegmentHideMe(true)
     //$comparisonResult.html(stockFacts(diff, quantity));
     $('#env_result').html('');
@@ -310,16 +315,44 @@ function updateAmount() {
     $('#US_result').html('');
     return
   }
+
+  if (isMeal) {
+    accStock = {}
+    for (var i = 0; i < selected.length; i++) {
+
+      var stock = selected[i]
+      function isSumable(prop) {
+        return typeof (prop) !== 'object' ? false : typeof prop[0] === 'number'
+      }
+
+      for (var key in stock) {
+        if (stock.hasOwnProperty(key)) {
+          var old = accStock[key]
+          accStock[key] = isSumable(accStock[key]) ? ([accStock[key][0] + stock[key][0], stock[key][1]]) : stock[key]
+          // console.log(key, 'old: ' + old, ' --- new: ' + accStock[key])
+        }
+      }
+    }
+    selected[0] = accStock
+    selected[1] = stocksUs[0]
+    selected[2] = stocksUs[1]
+  }
+
   var difference = {};
-  var diff = {}
+  var diff = {};
+  var diff2 = {};
   var d1 = [];
+
   Object.keys(selected[0]).forEach(function (k) {
     if (/^(key|name|servingUnit|unitsPerServing|group|icon)$/.test(k)) return
 
     var first = selected[0][k]
-    var second = selected[1][k]
     first[0] *= selected[0].unitsPerServing
+
+    var second = selected[1][k]
     second[0] *= selected[1].unitsPerServing
+
+
     difference[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? 'save' : 'use'];
 
     if (k.toLowerCase() === "meals") {
@@ -328,6 +361,16 @@ function updateAmount() {
       diff[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? ' + ' : ' - ']
     }
 
+    if (isMeal) {
+      var third = selected[2][k]
+      third[0] *= selected[2].unitsPerServing      
+
+      if (k.toLowerCase() === "meals") {
+        diff2[k] = [Math.abs(first[0] - third[0]), first[1], first[0] < third[0] ? ' + ' : ' - ']
+      } else {
+        diff2[k] = [Math.abs(first[0] - third[0]), first[1], first[0] > third[0] ? ' + ' : ' - ']
+      }
+    }
     // console.log('%c key, val1, val2', 'color:blue', k, first,second, diff[k])
   })
 
@@ -340,7 +383,12 @@ function updateAmount() {
   $('#health_result').html(stockFactsHealth(diff, quantity, d1));
   $('#soc_result').html(stockFactsSocial(diff, quantity, d1));
   $('#year_result').html(stockFacts2(diff, quantity * 365, d1));
-  $('#US_result').html(stockFacts3(diff, quantity * 323148587, d1));
+
+  if(isMeal) {
+    $('#US_result').html(stockFacts3(diff2, quantity * 323148587, d1));
+  } else {
+    $('#US_result').html(stockFacts3(diff, quantity * 323148587, d1));
+  }  
 
   btnItemListener()
 }
@@ -471,7 +519,7 @@ $('.stockSelect').each((i, elm) => {
 })
 
 function submitReady() {
-  $('#submit').prop('disabled', false)
+  $('#submit, #submit-meal').prop('disabled', false)
   updateAmount()
 }
 
@@ -481,8 +529,10 @@ $('.ui.dropdown').dropdown({
     var id = $(val).data('id') || $(text).data('id')
     if (id === 's1') {
       app.one = list.split(',').filter((i) => i)
-    } else {
+    } else if (id === 's2') {
       app.two = list.split(',').filter((i) => i)
+    } else {
+      app.three = list.split(',').filter((i) => i)
     }
 
     //updateAmount();
@@ -514,7 +564,7 @@ $('.ui.dropdown').dropdown({
 $quantity.on('input', submitReady)
 
 //global var
-var app = { one: [], two: [] };
+var app = { one: [], two: [], three: [] };
 
 function toggleSegmentHideMe(b) {
   var $seg = $('.ui.segment, .result');
@@ -560,9 +610,13 @@ function scrollToEnv() {
   $("#main-container").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
 }
 
-$('#submit').click((e) => {
+$('#submit, #submit-meal').click((e) => {
   $(e.target).prop('disabled', true);
-  updateAmount();
+  if ($(e.target).attr('id') === 'submit-meal') {
+    updateAmount(true);
+  } else {
+    updateAmount();
+  }
 
   window.aTop = $('#side-ads').offset().top;
 
@@ -588,8 +642,10 @@ function syncGroupHeaderHeight(id) {
   var list = [];
   if (id === 's1') {
     list = app.one.map((i) => Number(i))
-  } else {
+  } if (id === 's2') {
     list = app.two.map((i) => Number(i))
+  } else {
+    list = app.three.map((i) => Number(i))
   }
   $selects.each((i, elm) => {
     if ($(elm).attr('id') === id) {
@@ -615,42 +671,42 @@ function syncGroupHeaderHeight(id) {
 
 // Chart.defaults.global.defaultFontSize = '25';
 
-function insertBar(elm, a, b) {    
-    var h = a > b ? a : b,  
-      step = parseInt(h / 3),
-      w = $(window).width(),
-      fSize = fSize,
-      barWidth = 90,
-      padd = 50,
-      categoryPercentage = 0.9,
-      barPercentage = 0.8,
-      bZero = true;
-      
-      $(elm).css({width: "300px!important", height: "200px!important"})        
-      
-      if ((a + b) == 0) {
-        bZero = true
-      }
+function insertBar(elm, a, b) {
+  var h = a > b ? a : b,
+    step = parseInt(h / 3),
+    w = $(window).width(),
+    fSize = fSize,
+    barWidth = 90,
+    padd = 50,
+    categoryPercentage = 0.9,
+    barPercentage = 0.8,
+    bZero = true;
 
-      if(w < 700) {
-        fSize = 12 
-        barWidth = 30
-        padd = 5
-        categoryPercentage= 1,
-        barPercentage= 1.0;
+  $(elm).css({ width: "300px!important", height: "200px!important" })
 
-        $(elm).css({width: "50px!important", height: "150px!important"})        
+  if ((a + b) == 0) {
+    bZero = true
+  }
 
-        if(h > 1000) {
-          barWidth = 15          
-        }        
-      }    
+  if (w < 700) {
+    fSize = 12
+    barWidth = 30
+    padd = 5
+    categoryPercentage = 1,
+      barPercentage = 1.0;
+
+    $(elm).css({ width: "50px!important", height: "150px!important" })
+
+    if (h > 1000) {
+      barWidth = 15
+    }
+  }
   var ctx = elm;
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-       labels: ["1st", "2nd"],
-      datasets: [{        
+      labels: ["1st", "2nd"],
+      datasets: [{
         data: [a, b],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -663,10 +719,10 @@ function insertBar(elm, a, b) {
         borderWidth: 1
       }]
     },
-    options: {              
+    options: {
       layout: {
         padding: 12
-      }, 
+      },
       scales: {
         margin: {
           left: 12,
@@ -675,18 +731,18 @@ function insertBar(elm, a, b) {
         yAxes: [{
           ticks: {
             responsive: false,
-            beginAtZero: bZero, 
-            scaleOverride:true,                       
+            beginAtZero: bZero,
+            scaleOverride: true,
             max: h,
             min: 0,
-            stepSize: step,    
+            stepSize: step,
             //max: h,            
             fontSize: fSize,
             padding: padd,
             // callback: function(value) {return value.toLocaleString()},
-            userCallback: function(label, index, labels) {              
+            userCallback: function (label, index, labels) {
               if (Math.floor(label) === label) {
-                  return label.toLocaleString();
+                return label.toLocaleString();
               }
 
             },
@@ -696,22 +752,22 @@ function insertBar(elm, a, b) {
           display: false,
           // barThickness : barWidth,          
           categoryPercentage: categoryPercentage,
-          barPercentage: barPercentage,          
+          barPercentage: barPercentage,
         }]
       },
       legend: {
         display: false
       },
-      tooltips: { 
-        enabled: false,        
+      tooltips: {
+        enabled: false,
         // bodyFontSize: 80,        
         // xPadding: 12,      
         // yPadding: 12      
-      },      
-      hover: { mode: null },      
-      scaleLabel: function(label){
-        return  Number(label.value).toFixed(2).replace('.',',');
-      },  
+      },
+      hover: { mode: null },
+      scaleLabel: function (label) {
+        return Number(label.value).toFixed(2).replace('.', ',');
+      },
       // tooltipTemplate: "<%= datasetLabel %> - <%= value.toLocaleString() %>",
     }
   });
@@ -721,20 +777,20 @@ function insertBar(elm, a, b) {
 function btnItemListener() {
   $('tbody tr').off('click').on('click', function (e) {
     var target = $(e.target).closest('tr').find('td.btn-item').eq(0)
-        target1 = $(target),
-        target2 = target1.find('canvas')
-        // console.log(target)
+    target1 = $(target),
+      target2 = target1.find('canvas')
+    // console.log(target)
     if (target2.length > 0) {
       var a = target1.data('first'),
         b = target1.data('second')
-      target2.eq(0).css({'display': 'block'})
+      target2.eq(0).css({ 'display': 'block' })
       // target2.eq(0).off('mouseover').on('mouseover', function (el) {
-        var v = $(e.target).closest('tr').find('.sub-vals')
-        if(v.length > 0) {
-          if(!v.eq(0).hasClass('on')) {
-            v.eq(0).addClass('on')
-          }
+      var v = $(e.target).closest('tr').find('.sub-vals')
+      if (v.length > 0) {
+        if (!v.eq(0).hasClass('on')) {
+          v.eq(0).addClass('on')
         }
+      }
       //   //$(el.target).css({'width': "200px!important", 'height': "200px!important"})
       // })
       insertBar(target2[0], a, b)
@@ -751,24 +807,24 @@ function btnItemListener() {
 
 function scroller() {
   clearTimeout(window.isWaiting)
-  window.isWaiting = setTimeout(() => {    
+  window.isWaiting = setTimeout(() => {
     togglePos()
   }, 100)
-    
+
 }
 
-function togglePos(){  
-  var aTop = window.aTop  
-    if ($("#main-container").scrollTop() >= aTop) {
-     $('#side-ads').css( "position", "fixed" );
-     $('#side-ads').css({"top":"19%", right:"12px"} );     
-    } else {
-      $('#side-ads').css( "position", "relative" );      
-    }
+function togglePos() {
+  var aTop = window.aTop
+  if ($("#main-container").scrollTop() >= aTop) {
+    $('#side-ads').css("position", "fixed");
+    $('#side-ads').css({ "top": "19%", right: "12px" });
+  } else {
+    $('#side-ads').css("position", "relative");
+  }
 }
 
-$(function() {
-  $("#main-container").scroll(function(e) {
+$(function () {
+  $("#main-container").scroll(function (e) {
     scroller()
   });
 });
