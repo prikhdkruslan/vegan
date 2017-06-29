@@ -1,0 +1,492 @@
+*{
+  padding : 0;
+  margin : 0;
+}
+body{  
+  overflow-y: hidden;
+}
+
+.topnav {
+  height: 50px;
+  width: 100%;
+  color: white;
+  background-color: #173;
+  overflow: hidden;
+  text-align: center;
+  
+}
+
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar.navbar-light a {
+  color: white!important;
+}
+
+.navbar-nav li>a:hover  {
+  background-color: #21ba45!important;
+}
+.navbar-nav li.active {
+  background-color: #21ba45!important;
+}
+
+.navbar.navbar-light li:hover>a {
+  /*color: #4183c4!important;*/
+}
+
+.nav.navbar-nav li.active:hover>a {
+  color: white!important;
+}
+
+button.navbar-toggle.collapsed span.icon-bar {
+  background-color: white;
+}
+
+button.navbar-toggle span.icon-bar {
+  background-color:  #4183c4;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.box{
+  width : 22%;
+  display : block;
+  text-align : center;
+  font-size : 1.5em;
+}
+
+.box-2{
+  width : 48%;
+  margin-top: 1%;
+  display : block;
+  text-align : center;
+  font-size : 1.5em;
+}
+
+.fa.cow {
+    width: 40px;
+    height: 40px!important;
+    margin-right: 12px;
+}
+
+.sub-vals {
+    position: relative;
+    font-size: 0.6em;
+    color: green;
+    border: 1px solid;
+    border-radius: 12px;
+    font-weight: bold;
+    top: -15px;
+    opacity: 0;
+    transition: all .5s linear;
+}
+
+.sub-vals.on {    
+    top: 5px;
+    opacity: 1;
+}
+
+.footer-bottom {
+    background-color: rgb(55, 78, 16);
+    min-height: 30px;
+    width: 100%;    
+    position: absolute;
+}
+
+.container {
+  margin-bottom: 40px;
+  padding: 7px 0;
+}
+.copyright {
+    color: #000;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+}
+.design {
+    color: #000;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+    text-align: right;    
+}
+.design a {
+    color: #000;
+}
+
+.design a:hover {
+    color: #fff;
+}
+
+canvas {  
+  margin: 12px 0 -10px 25px;  
+  user-select: none;
+  /*width: 150px!important;
+  height: 150px!important;    */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 12px;
+}
+
+#chartjs-tooltip {
+  height: 120px!important;
+  width: 120px!important;
+}
+
+tbody tr{
+  cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+  .box{
+    display : block;
+    width : auto;
+  }
+
+  .box-2{
+    display : block;
+    width : auto;
+  }
+
+  .copyright {
+    text-align: center;
+   }
+  .design {
+    text-align: center;
+   }
+
+}
+
+.color-red{
+  color:red;
+  background:transparent}
+  .color-green{
+  color:green;
+  background:transparent}
+
+#share-buttons img {
+  width: 35px;
+  padding: 5px;
+  border: 0;
+  box-shadow: 0;
+  display: inline;
+  background: transparent;
+}
+ 
+
+/* Hide AddToAny vertical share bar when screen is less than 980 pixels wide */
+@media screen and (max-width: 980px) {
+    .a2a_floating_style.a2a_vertical_style { display: none; }
+}
+
+
+.ui.multiple.selection.dropdown .menu.sub {
+  overflow-x: visible!important;
+  overflow-y: auto;
+  
+
+}
+
+.ui.segment {
+  margin-top: 10px!important;
+  display: none;        
+  /*background: rgba(255, 255, 255, .5)!important;*/  
+  -webkit-transition: all .2s linear;
+  -moz-transition: all .2s linear;
+  transition: all .2s linear;
+}
+
+.ui.segment:not(.ads) {
+  overflow-x: scroll;  
+}
+
+.ui.segment {
+  max-width: 94vw;  
+}
+
+element {
+
+    min-height: 477px;
+    display: block;
+
+}
+.ui.segment:last-child {
+
+    margin-bottom: 0;
+
+}
+.ui.segment:first-child {
+
+    margin-top: 0;
+
+}
+.ui.segment:hover {
+
+    background: rgba(255, 255, 255, 1) !important;
+
+}
+
+.ui.segment:hover {
+  /*background: rgba(255, 255, 255, 1)!important;*/
+}
+
+.ui.segment.ads {
+    min-height: 100px;
+}
+
+.navbar-brand>img {
+    margin-top: -10px;
+}
+
+.nav.navbar-nav {
+  margin-left: 27vw;
+}
+
+#main-container{ 
+  /*display: flex; */
+  flex-direction:column;    
+  align-items: center;
+  justify-content: center;
+  margin-top: 51px;
+
+  background: url("../images/farm.jpg") no-repeat center!important;  
+  background-size: auto auto;
+  background-size: cover;
+  position: relative;
+  width: 100vw;
+  height: 100px;
+  align-self: center;
+  background-attachment: fixed;    
+  height: 100vh;  
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  padding-bottom: 45px;
+}
+
+.stockSelect {
+    margin: 0 12px;
+}
+
+.main-form {
+  /*background: url("./images/farm.jpg") no-repeat center;
+  background-size: cover;      */
+  position: relative;
+  width: 100vw;
+  height: 100px;
+  flex: 1;
+  align-self: center;
+  display: flex;
+}
+.result {  
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.row.row1 {
+  margin-bottom: 5px;
+  padding-left: 35px!important;
+}
+.side-ads {
+  transition: all 1s linear;
+}
+.row.row1 {
+  /*width: 70%;*/
+}
+.row.row2 {
+  /*width: 30%;*/
+}
+
+/*.col-lg-12, .col-lg-8 {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+}*/
+
+.box-1{        
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;    
+}
+
+.ui.form {
+    align-self: center;
+    border-radius: 12px;
+    padding: 9px 10px;
+    background: rgba(50, 153, 59, .8);
+    box-shadow: 7px 5px 3px rgba(50, 100, 50, .8);
+    flex: 1;
+    margin: 0 30px!important;
+    margin-top: -51px!important;
+}
+
+.result {
+  padding-top: 25px;  
+  flex: 1;
+}
+
+.celled.striped.table {
+  display: inline-block;
+}
+
+.ui.segment>table th {
+    padding: 20px 44px;
+    font-size: 1.6em;
+}
+
+.ui.segment>table th>i {
+    margin-right: 15px;    
+}
+
+.ui.segment>table {
+  font-size: 1.5em;
+}
+
+.ui.segment>table tbody {
+    padding: 2em 2em;    
+    width: 100%;   
+}
+
+.ui.form .field {
+    font-size: 1.2em;
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.ui.form .field>label {
+    color: rgba(255, 255, 255, 0.87)!important;    
+}
+
+.vals {
+    font-weight: bolder;
+    font-size: 1.5em;
+  }
+
+.badge {
+    margin: 0 5px;
+    padding: 11px 8px;
+}
+
+@media only screen and (max-width: 767px){
+  .ui.search.dropdown .menu {
+      max-height: 25rem!important;
+  }
+
+  .fa.cow {
+      width: 19px;
+      height: 19px!important;
+  }
+  .ui.segment>table th {  
+    padding: 18px 10px;  
+    font-size: 1em;
+  }
+
+  .ui.segment>table th>i {
+      margin-right: 15px;    
+  }
+
+  .ui.segment>table {
+    font-size: 1em;
+  }
+  
+  .ui.form .field {
+      font-size: 1em;
+  }
+
+  .vals {
+    font-weight: bolder;
+    font-size: 1em;
+  }
+
+  .ui.green.basic.button {
+    padding: 4px 10px;
+  }
+
+  .ui.green.basic.button .badge{
+    padding: 6px 11px;
+  }
+
+  .badge {
+    font-size: .7em;
+    padding: 10px;
+    display: none;
+  }
+
+}
+
+@media only screen and (min-width: 992px){
+  .ui.search.dropdown .menu {
+      max-height: 25rem!important;
+  }    
+}
+@media only screen and (min-width: 768px){
+  .ui.search.dropdown .menu {
+    max-height: 25rem!important;  
+  }
+}
+
+@media screen and (max-width: 1200px) {
+ .nav.navbar-nav {
+    margin-left: 21vw;
+  }
+}
+
+@media screen and (max-width: 950px) {
+ .nav.navbar-nav {
+    margin-left: 10vw;
+  }
+  .row.row1 {
+    padding-left: 0px!important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .col-lg-12 {
+    /*margin-left: calc(-4vw);
+    margin-right: calc(10vw);*/
+  }  
+  .ui.segment:not(.ads) {
+    min-width: 94vw;    
+    margin-left: auto !important;
+    margin-right: auto !important;    
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .col-lg-12 {
+    /*margin-left: calc(-9vw);    */
+  }  
+}
+
+
+/*ads*/
+.side-ads { width: 400px; height: 800px!important; }
+/*@media(min-width: 500px) { .side-ads { width: 468px; height: 60px; } }
+@media(min-width: 800px) { .side-ads { width: 728px; height: 90px; } }*/
