@@ -3,23 +3,11 @@
  */
 
 
-(function() {
-
-  var device,
-    previousDevice,
-    addClass,
-    documentElement,
+  var device={},
     find,
-    handleOrientation,
-    hasClass,
-    orientationEvent,
-    removeClass,
     userAgent;
 
-  // Add device as a global object.
-  window.device = device;
-
-
+find = (needle) =>{return userAgent.indexOf(needle) !== -1}
   // The client user agent string.
   // Lowercase, so we can use the more efficient indexOf(), instead of Regex
   userAgent = window.navigator.userAgent.toLowerCase();
@@ -108,9 +96,24 @@
   };
 
   //add ads on page
-  if(device.desktop){
+  if(device.desktop()){//<a href="https://goo.gl/Sg4Dv4"><img src="images/donate-button.jpg" style="width: 100%"></a>
     //where i need to put ads 4 desktop?
   }else{
     //where i need to put ads 4 mobile?
+
+
+    //add donate button at the end of the page
+    let donate=document.getElementById('side-ads'), donatePhone=donate.cloneNode(true);
+    donate.parentNode.removeChild(donate);
+    donatePhone.style.display='block';
+    donatePhone.style.alignContent='center';
+    donatePhone.id='donatePhone';
+    donatePhone.classList.remove('hidden-xs','side-ads');
+    donatePhone.getElementsByClassName('ui segment ads')[0].style.display='block';
+    donatePhone.getElementsByClassName('ui segment ads')[0].style.marginBottom='10px';
+    /*donatePhone.getElementsByClassName('ui segment ads')[0].style.width='178px';
+    donatePhone.getElementsByClassName('ui segment ads')[0].style.height='328px';
+    donatePhone.getElementsByTagName('img')[0].style.width='150px';//width:150px;height:300px
+    donatePhone.getElementsByTagName('img')[0].style.height='300px';//width:150px;height:*/
+    window['main-container'].insertBefore(donatePhone,window['main-container'].children[2])
   }
-})();
