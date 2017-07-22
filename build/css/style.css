@@ -494,3 +494,46 @@ element {
 .side-ads { width: 400px; height: 800px!important; }
 /*@media(min-width: 500px) { .side-ads { width: 468px; height: 60px; } }
 @media(min-width: 800px) { .side-ads { width: 728px; height: 90px; } }*/
+
+
+
+
+/*Additional Styles*/
+
+.calculator-instruction {
+  padding-top: 30px;
+  padding-bottom: 30px; 
+}
+
+
+
+.contact__Box {
+  width:836px;
+  min-height: 284px; 
+  display: block !important;
+  overflow-x: hidden !important;
+}
+.contact__Description {
+
+}
+.contact__Description__Text {
+  text-align: center;
+}
+.contact__form {
+  margin-top: 30px;
+}
+
+
+
+
+/*Helper classes*/
+
+.text-center {
+  text-align: center;
+}
+.m-a-0 {
+  margin: 0px !important;
+}
+.m-b-20 {
+  margin-bottom: 20px; 
+}
