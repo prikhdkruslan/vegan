@@ -64,84 +64,37 @@
   <div id="main-container">
     <div class="main-form">
       <div class="box-1">
-        <form class="ui form">
-          <div class="field">
-            <label>Servings</label>
-            <input type="number" id="numberOfStocks" value="1" min="1" style="text-align: center; max-width: 200px;" />
-          </div>
-          <div class="field">
-            <label>The impact of eating <br>
-          <span class="servingUnit"></span>
-          </label>
-            <div id="s1" class="stockSelect"></div>
-          </div>
-          <div class="field">
-            <label>vs <br>
-            <span class="servingUnit"></span></label>
-            <div id="s2" class="stockSelect"></div>
-          </div>
-          <div class="field">
-            <button id="submit" class="ui inverted yellow basic button" style="margin-top: 35px; padding:11px 17px;">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    
-    <div class="calculator-instruction" style="background-color: #fff;">
-      <div class="container">
-        <h1>Heading</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-        <div class="img-collection">
-          <div class="row m-b-20">
-            <div class="col-md-4">
-              <figure class="img-frame">
-                <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
-              </figure>
+        <div class="container">
+          <form class="ui form">
+            <div class="field">
+              <label>Servings</label>
+              <input type="number" class="text-center" id="numberOfStocks" value="1" min="1" />
             </div>
-            <div class="col-md-4">
-              <figure class="img-frame">
-                <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
-              </figure>
+            <div class="field">
+              <label>The impact of eating <br>
+            <span class="servingUnit"></span>
+            </label>
+              <div id="s1" class="stockSelect"></div>
             </div>
-            <div class="col-md-4">
-              <figure class="img-frame">
-                <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
-              </figure>
-            </div>     
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <figure class="img-frame">
-                <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
-              </figure>
+            <div class="field">
+              <label>vs <br>
+              <span class="servingUnit"></span></label>
+              <div id="s2" class="stockSelect"></div>
             </div>
-            <div class="col-md-4">
-              <figure class="img-frame">
-                <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
-              </figure>
+            <div class="field">
+              <button id="submit" class="ui inverted yellow basic button" style="padding:11px 17px;">Submit</button>
             </div>
-            <div class="col-md-4">
-              <figure class="img-frame">
-                <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
-              </figure>
-            </div>     
-          </div>
+          </form>              
         </div>
       </div>
     </div>
 
-    <div id="environmental-impact" class="container result">
-      <div class="row row1">
+
+    <div id="environmental-impact" class="container m-b-40 result">
+      <div class="row">
         <div class="col-lg-8 col-md-8 col-xs-12">
           <!-- start result -->
-          <div class="col-lg-12">
+          <div class="section-box">
             <div class="ui segment">
               <table class="celled striped table table-hover">
                 <thead>
@@ -157,7 +110,7 @@
             </div>
           </div>
 
-          <div class="col-lg-12">
+          <div class="section-box">
             <div class="ui segment">
               <table class="celled striped table table-hover">
                 <thead>
@@ -173,7 +126,7 @@
             </div>
           </div>
 
-          <div class="col-lg-12">
+          <div class="section-box">
             <div class="ui segment ads">              
               <!--put ads here-->                      	              
               
@@ -191,7 +144,7 @@
             </div>
           </div>
 
-          <div class="col-lg-12">
+          <div class="section-box">
             <div class="ui segment">
               <table class="celled striped table table-hover">
                 <thead>
@@ -207,7 +160,7 @@
             </div>
           </div>
 
-          <div class="col-lg-12">
+          <div class="section-box">
             <div class="ui segment">
               <table class="celled striped table table-hover">
                 <thead>
@@ -223,7 +176,7 @@
             </div>
           </div>
 
-          <div class="col-lg-12">
+          <div class="section-box">
             <div class="ui segment ads">
               <!--put ads here-->              	              
               <!-- Main ads -->
@@ -235,7 +188,7 @@
             </div>
           </div>
 
-          <div class="col-lg-12">
+          <div class="section-box">
             <div class="ui segment">
               <table class="celled striped table table-hover">
                 <thead>
@@ -251,7 +204,7 @@
             </div>
           </div>
 
-          <div class="col-lg-12" data-spy="affix" data-offset-top="197">
+          <div class="section-box" data-spy="affix" data-offset-top="197">
             <div class="ui segment ads">
               <!--put ads here-->              	              
               <!-- Main ads -->
@@ -276,6 +229,68 @@
       </div>
       <!--end of row1-->
     </div>
+
+
+    <div class="container calculator-instruction-wrapper">
+      <div class="row">
+        <div class="col-lg-8 col-md-8 col-xs-12">
+
+          <div class="calculator-instruction">
+            
+            <h1>Heading</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+            <div class="img-collection">
+              <div class="row m-b-20">
+                <div class="col-md-4 col-sm-4">
+                  <figure class="img-frame">
+                    <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
+                  </figure>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <figure class="img-frame">
+                    <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
+                  </figure>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <figure class="img-frame">
+                    <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
+                  </figure>
+                </div>     
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-sm-4">
+                  <figure class="img-frame">
+                    <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
+                  </figure>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <figure class="img-frame">
+                    <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
+                  </figure>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <figure class="img-frame">
+                    <img src="images/farm.jpg" alt="img-alt" class="img-responsive">
+                  </figure>
+                </div>     
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>      
+    </div>
+
+
+
+
+
     <div class="footer-bottom">
       <div class="container">
         <div class="row">

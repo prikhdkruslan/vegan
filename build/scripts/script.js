@@ -586,13 +586,13 @@ function toggleSegmentHideMe(b) {
 toggleSegmentHideMe(true)
 
 //set default height of each column
-var adjustBoxHeight = (function () {
-  var box = $('.ui.segment, .main-form').not('.ads'),
-    h = $(window).height()         //screen.availHeight - 45
-  box.css({
-    'min-height': h
-  })
-})()
+// var adjustBoxHeight = (function () {
+//   var box = $('.ui.segment, .main-form').not('.ads'),
+//     h = $(window).height()         //screen.availHeight - 45
+//   box.css({
+//     'min-height': h
+//   })
+// })()
 
 function scrollToEnv() {
   window.EVN_HASH = window.EVN_HASH || $('#environmental-impact').offset().top - 50
