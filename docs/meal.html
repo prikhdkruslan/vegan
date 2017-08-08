@@ -1,123 +1,237 @@
 <!DOCTYPE html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
-  <script src="scripts/jquery-3.2.1.min.js"></script>
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>     
   
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <script>
+<meta charset="UTF-8">
+  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
+  
+<link rel="stylesheet" href="css/bootstrap.min.css">
+  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+<link rel="stylesheet" href="css/style.css">
+  
+<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+  
+<script src="scripts/jquery-3.2.1.min.js"></script>
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>     
+  
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  
+<script>
   (adsbygoogle = window.adsbygoogle || []).push({
   google_ad_client: "ca-pub-9508949976644917",
   enable_page_level_ads: true
   });
   </script>
 
+
 </head>
 
+
 <body>
-  <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #173;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="./images/logo3.png" alt="LOGO">
-        </a>
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-          aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar" style="color:black!important"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li><a href="/vegan">Ingredient Calculator <span class="sr-only">(current)</span></a></li>
-          <li class="active"><a href="/vegan/meal.html">Meal Calculator</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#sources">Sources</a></li>
-        </ul>
-      </div>
-      <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-  </nav>
-
-  <div id="main-container">
-    <div class="main-form">
-      <div class="box-1">
-        <form class="ui form">
-          <div class="field">
-            <label>Servings</label>
-            <input type="number" id="numberOfStocks" value="1" min="1" style="text-align: center; max-width: 200px;" />
-          </div>
-          <div class="field">
-            <label>Breakfast <br>
-          <span class="servingUnit"></span>
-          </label>
-            <div id="s1" class="stockSelect"></div>
-          </div>
-          <div class="field">
-            <label>Lunch <br>
-            <span class="servingUnit"></span></label>
-            <div id="s2" class="stockSelect"></div>
-          </div>
-          <div class="field">
-            <label>Dinner <br>
-            <span class="servingUnit"></span></label>
-            <div id="s3" class="stockSelect"></div>
-          </div>
-          <div class="field">
-            <button id="submit-meal" class="ui inverted yellow basic button" style="margin-top: 35px; padding:11px 17px;">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div id="environmental-impact" class="container result">
-      <div class="row row1">
-        <div class="col-lg-8 col-md-8 col-xs-12">
-          <!-- start result -->
-          <div class="col-lg-12">
-            <div class="ui segment">
-              <table class="celled striped table table-hover">
-                <thead>
-                  <tr>
-                    <th colspan="2">
-                      <i class="fa fa-car" style="color:#A9A9A9"></i> Environmental Impact:
-                    </th>
-                  </tr>
-                </thead>
-                <tbody id="env_result">
-                </tbody>
-              </table>
+  
+    <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #173;">
+    
+        <div class="container-fluid">
+      
+            <a class="navbar-brand" href="#">
+        
+                <img src="./images/logo3.png" alt="LOGO">
+        
+            </a>
+      
+            <!-- Brand and toggle get grouped for better mobile display -->
+      
+            <div class="navbar-header">
+        
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        
+                    <span class="sr-only">Toggle navigation</span>
+        
+                    <span class="icon-bar" style="color:black!important"></span>
+        
+                    <span class="icon-bar"></span>
+        
+                    <span class="icon-bar"></span>
+      
+                </button>
+      
             </div>
-          </div>
 
-          <div class="col-lg-12">
-            <div class="ui segment">
-              <table class="celled striped table table-hover">
-                <thead>
-                  <tr>
-                    <th colspan="2">
-                      <i class="fa fa-heartbeat" style="color:#FF69B4"></i> Health Impact:
-                    </th>
-                  </tr>
-                </thead>
-                <tbody id="health_result">
+      
+            <!-- Collect the nav links, forms, and other content for toggling -->
+      
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        
+                <ul class="nav navbar-nav">
+          
+                    <li>
+                        <a href="index.html">Ingredient Calculator 
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+          
+                    <li class="active">
+                        <a href="meal.html">Meal Calculator</a>
+                    </li>
+          
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+          
+                    <li>
+                        <a href="contact.php">Contact</a>
+                    </li>
+          
+                    <li>
+                        <a href="#sources">Sources</a>
+                    </li>
+        
+                </ul>
+      
+            </div>
+      
+            <!-- /.navbar-collapse -->
+    
+        </div>
+    
+        <!-- /.container-fluid -->
+  
+    </nav>
+
+  
+    <div id="main-container">
+    
+        <div class="main-form">
+      
+            <div class="box-1">
+        
+                <form class="ui form" style="margin-top: -52px!important;">
+          
+                    <div class="field">
+            
+                        <label>Servings</label>
+            
+                        <input type="number" id="numberOfStocks" value="1" min="1" style="text-align: center; max-width: 200px;" />
+          
+                    </div>
+          
+                    <div class="field">
+            
+                        <label>Breakfast <br>
+          
+                            <span class="servingUnit"></span>
+          
+                        </label>
+            
+                        <div id="s1" class="stockSelect"></div>
+          
+                    </div>
+          
+                    <div class="field">
+            
+                        <label>Lunch <br>
+            
+                          <span class="servingUnit"></span>
+                        </label>
+            
+                        <div id="s2" class="stockSelect"></div>
+          
+                    </div>
+          
+                    <div class="field">
+            
+                        <label>Dinner <br>
+            
+                            <span class="servingUnit"></span>
+                        </label>
+            
+                        <div id="s3" class="stockSelect"></div>
+          
+                    </div>
+          
+                    <div class="field">
+            
+                        <button id="submit-meal" class="ui inverted yellow basic button" style="margin-top: 35px; padding:11px 17px;">Submit</button>
+          
+                    </div>
+        
+                </form>
+      
+            </div>
+    
+        </div>
+
+    
+        <div id="environmental-impact" class="container result">
+      
+            <div class="row row1">
+        
+                <div class="col-lg-8 col-md-8 col-xs-12">
+          
+                <!-- start result -->
+          
+                    <div class="col-lg-12">
+            
+                        <div class="ui segment">
+              
+                            <table class="celled striped table table-hover">
+                
+                                <thead>
+                  
+                                    <tr>
+                    
+                                        <th colspan="2">
+                      
+                                            <i class="fa fa-car" style="color:#A9A9A9"></i> Environmental Impact:
+                    
+                                        </th>
+                  
+                                    </tr>
+                
+                                </thead>
+                
+                                <tbody id="env_result">
+</tbody>
+              
+                            </table>
+            
+                        </div>
+          
+                    </div>
+
+          
+                    <div class="col-lg-12">
+            
+                        <div class="ui segment">
+              
+                            <table class="celled striped table table-hover">
+                
+                                <thead>
+                  
+                                    <tr>
+                    
+                                        <th colspan="2">
+                      
+                                            <i class="fa fa-heartbeat" style="color:#FF69B4"></i> Health Impact:
+                    
+                                        </th>
+                  
+                                    </tr>
+                
+                                </thead>
+                
+                                <tbody id="health_result">
                 </tbody>
               </table>
             </div>
