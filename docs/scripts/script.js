@@ -23,24 +23,19 @@ function Stock(data, i) {
     icon: data[18]
   }
 }
+//console.log(stocks);
 stocks = stocks.map(Stock)
 stocksUs = stocksUs.map(Stock)
+//console.log(stocks);
 
-//var $selects = $('.selectStock')
-var $selects = $('.stockSelect')
-var $quantity = $('#numberOfStocks')
-//var $comparisonResult = $('.comparison .result')
+var $selects = $('.stockSelect') // input for meal
+var $quantity = $('#numberOfStocks') // input for number of servings
 
-// $selects.each(function() {
-//   $(this).append(stocks.map(function(stock, i) {
-//     return new Option(stock.name, i)
-//   }))
-// })
 
 function toLocale(num, dig) {
   var dig = typeof dig == "undefined" ? 2 : dig
   if (typeof num == 'number')
-    return num.toLocaleString(undefined, {
+    return num.toLocaleString('en-US', {
       minimumFractionDigits: dig,
       maximumFractionDigits: dig
     })
@@ -50,14 +45,14 @@ function format(data, multiplier, digits, a, b, unit) {
   data = data.slice()
 
   digits = unit == "$" ? 2 : digits
-  data[0] = toLocale(+(data[0] * multiplier), digits) //.toFixed(digits)).toLocaleString();  
-
+  data[0] = toLocale(+(data[0] * multiplier), digits) //.toFixed(digits)).toLocaleString();
+//  console.log(data[0])
   if (unit == "$") {
     data[0] = ["$", data[0]].join(" ");
   }
 
   if (a == "bad" && data[2] == " + ") {
-    data[0] = "<span class='color-red'>" + data[2] + " " + data[0] + "</span>"
+    data[0] = "<span class='color-red'>" + data[2] + "  " + data[0] + "</span>"
   }
 
   if (a == "bad" && data[2] == " - ") {
@@ -109,25 +104,26 @@ function Row(val, desc, c) {
 
   var td = `
       <tr>
-        <td class="collapsing" style="white-space: nowrap; text-align:center">        
-          <div class="ui green basic button" data-first="${one}" data-second="${two}">                        
-            <i class="vals">${val}</i>                        
-          </div>        
+        <td class="collapsing" style="white-space: nowrap; text-align:center">
+          <div class="ui green basic button" data-first="${one}" data-second="${two}">
+            <i class="vals">${val}</i>
+          </div>
           <div class="sub-vals">${one_s} vs ${two_s}</div>
         </td>
         <td class="collapsing btn-item" style="width:100%; text-align:center" data-first="${one}" data-second="${two}">
-          ${desc} 
+          ${desc}
           <canvas></canvas>
-        </td>         
+        </td>
       </tr>
   `
   return td
+  console.log(td);
 }
 
 function format2(data, multiplier, digits, a, b, unit) {
   data = data.slice()
   data[0] = (+(data[0] * multiplier).toFixed(digits)).toLocaleString();
-  //console.log(data);
+//  console.log(data[0]);
   if (a == "use" && data[2] == " + ") {
     data[0] = "<span class='color-red'>" + data[0] + "</span>"
   }
@@ -156,6 +152,7 @@ function format2(data, multiplier, digits, a, b, unit) {
 }
 
 function stockFacts(stock, quantity, d) {
+//  console.log('stockFacts', stock);
   return [
     format(stock.water, quantity, 2, "bad", "use") + ' gallons of water<br>' +
     format(stock.carbon, quantity, 2, "bad", "emit") + ' pounds of carbon dioxide and methane equivalents <br>' +
@@ -175,6 +172,7 @@ function stockFacts(stock, quantity, d) {
 }
 
 function stockFactsEnv(stock, quantity, d) {
+//  console.log('stockFactsEnv', stock);
   return [
     `${Row(format(stock.water, quantity, 2, "bad", "use"), "gallons of water", [d[0].water, d[1].water, quantity])}` +
     `${Row(format(stock.carbon, quantity, 2, "bad", "emit"), "pounds of carbon dioxide and methane equivalents", [d[0].carbon, d[1].carbon, quantity])}` +
@@ -183,6 +181,7 @@ function stockFactsEnv(stock, quantity, d) {
 }
 
 function stockFactsHealth(stock, quantity, d) {
+//  console.log('stockFactsHealth', stock);
   return [
     `${Row(format(stock.calories, quantity, 2, "bad", "consume"), "calories", [d[0].calories, d[1].calories, quantity])}` +
     `${Row(format(stock.protein, quantity, 2, "good", "consumegood"), "of protein", [d[0].protein, d[1].protein, quantity])}` +
@@ -196,6 +195,7 @@ function stockFactsHealth(stock, quantity, d) {
 }
 
 function stockFactsSocial(stock, quantity, d) {
+//  console.log('stockFactsSocial', stock);
   return [
     `${Row(format(stock.lives, quantity, 5, "bad", "save"), "animal lives", [d[0].lives, d[1].lives, quantity])}` +
     `${Row(format(stock.feed, quantity, 2, "bad", "require"), "pounds of feed", [d[0].feed, d[1].feed, quantity])}` +
@@ -204,6 +204,7 @@ function stockFactsSocial(stock, quantity, d) {
 }
 
 function stockFacts2(stock, quantity, d) {
+//  console.log('stockFacts2', stock);
   return [
     `${Row(format(stock.water, (quantity / 50), 2, "bad", "use"), "bathtubs worth of water used", [d[0].water, d[1].water, (quantity / 50)])}` +
     `${Row(format(stock.carbon, (quantity * 23.6 / (20)), 2, "bad", "emit"), "miles worth of carbon dioxide driven in a car", [d[0].carbon, d[1].carbon, (quantity * 23.6 / (20))])}` +
@@ -223,10 +224,11 @@ function stockFacts2(stock, quantity, d) {
 }
 
 function stockFacts3(stock, quantity, d) {
+//  console.log('stockFacts3', stock);
   return [
     `${Row(format(stock.water, (quantity / 660430), 2, "bad", "use"), "Olympic swimming pools worth of water", [d[0].water, d[1].water, (quantity / 660430)])}` +
     `${Row(format(stock.carbon, (quantity / 12000), 2, "bad", "emit"), "cars worth of carbon dioxide", [d[0].carbon, d[1].carbon, (quantity / 12000)])}` +
-    `${Row(format(stock.lives, quantity, 5, "bad", "save"), "animal lives", [d[0].lives, d[1].lives, quantity])}` +
+    `${Row(format(stock.lives, quantity, 2, "bad", "save"), "animal lives", [d[0].lives, d[1].lives, quantity])}` +
     `${Row(format(stock.meals, (quantity / 3 / 365), 2, "bad", "preserve"), "people who can be fed for an entire year", [d[0].meals, d[1].meals, (quantity / 3 / 365)])}` +
     `${Row(format(stock.land, (quantity / 43560), 2, "bad", "require"), "acres of land required", [d[0].land, d[1].land, (quantity / 43560)])}` +
     `${Row(format(stock.healthcare, quantity, 2, "bad", "save", "$"), "in projected healthcare costs", [d[0].healthcare, d[1].healthcare, quantity])}`
@@ -235,6 +237,7 @@ function stockFacts3(stock, quantity, d) {
 
 function getStock(key) {
   var ori = stocks[+key]
+//  console.log('getStock', ori);
   var newObj = {}
   for (var k in ori) {
     if (ori.hasOwnProperty(k)) {
@@ -251,17 +254,26 @@ function getStock(key) {
 }
 
 function updateAmount(isMeal) {
+
   var quantity = +$quantity.val()
+//  console.log('quantity', quantity)
   var selected = []
   isMeal = isMeal || false
+//  console.log('isMeal', isMeal)
+//  console.log('selects', $selects)
 
   $selects.each(function (i, elm) {
     var id = $(elm).attr("id")
-    //var $result = $(this).nextAll('.result').empty()
+//    console.log('id', id)
+
     var $amount = $(this).prev().find('.servingUnit').empty()
+//    console.log('amount', $amount)
     var list = []
     var dummy = ""
+
     var accStock = {}
+    console.log('accStock', accStock)
+//    console.log('app', app)
 
     if (id === 's1') {
       list = app.one.slice()
@@ -270,15 +282,19 @@ function updateAmount(isMeal) {
     } else {
       list = app.three.slice()
     }
+    //console.log('list', list)
     //console.log(1, stocks[0].name, stocks[0].calories[0])
     if (list.length == 0) return
     for (var i = 0; i < list.length; i++) {
       var key = list[i]
       var stock = getStock(key)
+//      console.log('stock', stock)
       if (!stock) continue
 
       var amount = (quantity * stock.unitsPerServing).toFixed(2)
+//      console.log('amount', amount)
       dummy += " & " + amount + ' ' + stock.servingUnit + ' of ' + stock.name
+//      console.log('dummy', dummy)
 
       function isSumable(prop) {
         return typeof (prop) !== 'object' ? false : typeof prop[0] === 'number'
@@ -290,21 +306,27 @@ function updateAmount(isMeal) {
           accStock[key] = isSumable(accStock[key]) ? ([accStock[key][0] + stock[key][0], stock[key][1]]) : stock[key]
           // console.log(key, 'old: ' + old, ' --- new: ' + accStock[key])
         }
+//        console.log('accStock', accStock)
       }
       //console.log(2, stocks[0].name, stocks[0].calories[0])
     }
 
     dummy = '(' + dummy.substr(3) + ')'
     $amount.text(dummy)
-    //$result.html(stockFacts(stock, amount))  
+
+//    console.log('accStock', accStock)
     selected.push(accStock)
+
   })
 
+//  console.log('selected', selected)
+
+//  console.log('submit', $('#submit-meal'))
   if (($('#submit').length > 0 && $('#submit').attr('disabled') !== 'disabled') || ($('#submit-meal').length > 0 && $('#submit-meal').attr('disabled') !== 'disabled')) {
     return;
   }
 
-  //$comparisonResult.empty()
+
   if ((!isMeal && (!selected[0] || !selected[1])) || (isMeal && (!selected[0] || !selected[1] || !selected[2]))) {
     toggleSegmentHideMe(true)
     //$comparisonResult.html(stockFacts(diff, quantity));
@@ -317,25 +339,38 @@ function updateAmount(isMeal) {
   }
 
   if (isMeal) {
+
     accStock = {}
+    console.log('accStock', accStock)
     for (var i = 0; i < selected.length; i++) {
 
       var stock = selected[i]
+//      console.log('stock', stock)
+
       function isSumable(prop) {
         return typeof (prop) !== 'object' ? false : typeof prop[0] === 'number'
       }
 
       for (var key in stock) {
+//        console.log('stock', stock)
         if (stock.hasOwnProperty(key)) {
           var old = accStock[key]
+//          console.log('accStock', accStock)
           accStock[key] = isSumable(accStock[key]) ? ([accStock[key][0] + stock[key][0], stock[key][1]]) : stock[key]
-          // console.log(key, 'old: ' + old, ' --- new: ' + accStock[key])
+//            console.log('stock[key][1]', stock[key][1])
+//            console.log('stock[key][0]', stock[key][0])
+//          console.log(key, 'old: ' + old, ' --- new: ' + accStock[key])
+//          console.log('accStock', accStock)
         }
       }
     }
+//    console.log('accStock', accStock)
     selected[0] = accStock
+//    console.log('selected[0]', selected[0])
     selected[1] = stocksUs[0]
+//    console.log('selected[1]', selected[1])
     selected[2] = stocksUs[1]
+//    console.log('selected[2]', selected[2])
   }
 
   var difference = {};
@@ -346,14 +381,20 @@ function updateAmount(isMeal) {
   Object.keys(selected[0]).forEach(function (k) {
     if (/^(key|name|servingUnit|unitsPerServing|group|icon)$/.test(k)) return
 
+//    console.log('selected[0]', selected[0])
+//    console.log('k', k)
     var first = selected[0][k]
+//    console.log('first', first)
     first[0] *= selected[0].unitsPerServing
 
     var second = selected[1][k]
+//    console.log('second', second)
     second[0] *= selected[1].unitsPerServing
 
 
     difference[k] = [Math.abs(first[0] - second[0]), first[1], first[0] > second[0] ? 'save' : 'use'];
+//    console.log('k', k)
+//    console.log('difference[k]', difference[k])
 
     if (k.toLowerCase() === "meals") {
       diff[k] = [Math.abs(first[0] - second[0]), first[1], first[0] < second[0] ? ' + ' : ' - ']
@@ -363,12 +404,13 @@ function updateAmount(isMeal) {
 
     if (isMeal) {
       var third = selected[2][k]
-      third[0] *= selected[2].unitsPerServing      
+//      console.log('third', third)
+      third[0] *= selected[2].unitsPerServing
 
       if (k.toLowerCase() === "meals") {
-        diff2[k] = [Math.abs(first[0] - third[0]), first[1], first[0] < third[0] ? ' + ' : ' - ']
+        diff2[k] = [Math.abs(first[0] * 323148587 - third[0]), first[1], first[0] * 323148587 < third[0] ? ' + ' : ' - ']
       } else {
-        diff2[k] = [Math.abs(first[0] - third[0]), first[1], first[0] > third[0] ? ' + ' : ' - ']
+        diff2[k] = [Math.abs(first[0] * 323148587 - third[0]), first[1], first[0] * 323148587 > third[0] ? ' + ' : ' - ']
       }
     }
     // console.log('%c key, val1, val2', 'color:blue', k, first,second, diff[k])
@@ -378,17 +420,19 @@ function updateAmount(isMeal) {
   d1.push(Object.assign({}, selected[1]))
   //console.log(3, stocks[0].name, stocks[0].calories[0])
   toggleSegmentHideMe(false)
-  //$comparisonResult.html(stockFacts(diff, quantity));  
+//  console.log('d1', d1)
+  console.log('diff2', diff2)
+
   $('#env_result').html(stockFactsEnv(diff, quantity, d1));
   $('#health_result').html(stockFactsHealth(diff, quantity, d1));
   $('#soc_result').html(stockFactsSocial(diff, quantity, d1));
   $('#year_result').html(stockFacts2(diff, quantity * 365, d1));
 
   if(isMeal) {
-    $('#US_result').html(stockFacts3(diff2, quantity * 323148587, d1));
+    $('#US_result').html(stockFacts3(diff2, quantity, d1));
   } else {
-    $('#US_result').html(stockFacts3(diff, quantity * 323148587, d1));
-  }  
+    $('#US_result').html(stockFacts3(diff, quantity, d1));
+  }
 
   btnItemListener()
 }
@@ -400,7 +444,7 @@ var groups = ((s) => {
     if (!(temp.indexOf(opt.group) > -1))
       temp.push(opt.group)
   })
-  // return temp.sort((a,b) => a > b)
+
   var l = temp.length
 
   for (var i = 0; i < l; i++) {
@@ -435,7 +479,6 @@ var groups = ((s) => {
 var he = 0
 function SubMenu(opt, id, grp) {
   he = he + 45;
-  //var sub = `<div class="item" data-value="${opt.key}"><i data-id=${id} class="${opt.icon} ingredient"></i>${opt.name}</div>`
   var sub = `<div class="item" data-value="${opt.key}">
   <i data-id=${id} data-group="${grp}" class=""><img src="${opt.icon}" width="20px" height="20px"></i>
   ${opt.name}</div>`
@@ -462,7 +505,7 @@ function SubDropDown(grp, id) {
       <i class="dropdown icon"></i>
       ${grp}
       <div class="menu sub">
-        ${SubMenus(grp, id)}                
+        ${SubMenus(grp, id)}
       </div>
     </div>`
   return t
@@ -474,7 +517,7 @@ function GroupMenu(grp, id) {
     <div class="header" data-group-header="${grp}" data-pos=${he}>
       <i class="tags icon"></i>
       ${grp}
-    </div>    
+    </div>
       ${SubMenus(grp, id)}
     `
   return group
@@ -495,13 +538,13 @@ function DropDown(id) {
     if (grp.length == 0) {
       temp.push(SubMenus(grp, id))
     } else {
-      //temp.push(SubDropDown(grp, id))      
+      //temp.push(SubDropDown(grp, id))
       temp.push(GroupMenu(grp, id))
     }
   })
 
   var template = `
-  <div class="ui multiple search selection dropdown">    
+  <div class="ui multiple search selection dropdown">
     <i class="dropdown icon"></i>
     <div class="default text">${text}</div>
     <div class="menu sub">
@@ -535,18 +578,10 @@ $('.ui.dropdown').dropdown({
       app.three = list.split(',').filter((i) => i)
     }
 
-    //updateAmount();
     syncGroupHeaderHeight(id);
     submitReady()
-    //scroller();
   },
-  // onAdd: (list,val, text, d)=> {
-  // var id = $(val).data('id') || $(text).data('id')        
-  // var grp = $(val).data('group') || $(text).data('group')        
-  // if(id === 's2' && grp.toLowerCase() === 'meat')  
-  //   $('.menu.sub.transition.visible').animate({scrollTop:350}, 1000)
-  //   console.log('test', d)
-  // }
+
   onAdd: function (list, val, text) {
     var grp = $(val).data('group') || $(text).data('group')
     var $g = $(this).find('[data-group-header="' + grp + '"]').eq(0)
@@ -560,7 +595,7 @@ $('.ui.dropdown').dropdown({
   }
 })
 
-//$quantity.on('input', updateAmount)
+
 $quantity.on('input', submitReady)
 
 //global var
@@ -588,25 +623,19 @@ toggleSegmentHideMe(true)
 //set default height of each column
 var adjustBoxHeight = (function () {
   var box = $('.ui.segment, .main-form').not('.ads'),
-    h = $(window).height()         //screen.availHeight - 45
+    h = $(window).height(),
+    box2 = $('#main-form2')
   box.css({
     'min-height': h
+  })
+  box2.css({
+    'min-height': '1000px'
   })
 })()
 
 function scrollToEnv() {
   window.EVN_HASH = window.EVN_HASH || $('#environmental-impact').offset().top - 50
-  // if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)) {
-  //   $({ scrollTop: window.scroll }).animate({ scrollTop: window.EVN_HASH }, {
-  //     duration: 1000,
-  //     easing: 'swing',
-  //     step: function (val) {
-  //       window.scrollTo(0, val);
-  //     }
-  //   });
-  // } else {
-  //   $("html, body").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
-  // }
+
   $("#main-container").animate({ scrollTop: window.EVN_HASH + "px" }, 1500);
 }
 
@@ -624,19 +653,6 @@ $('#submit, #submit-meal').click((e) => {
   e.preventDefault()
 })
 
-// function scroller() {
-//   if (app.one.length == 0 || app.two.length == 0) {
-//     return
-//   }
-//   if (window.isWaiting || typeof window.isWaiting === 'undefined') {
-//     clearTimeout(window.isWaiting)
-//     window.isWaiting = setTimeout(() => {
-//       window.isWaiting = undefined
-//       scrollToEnv()
-//     }, 3500)
-//     return
-//   }
-// }
 
 function syncGroupHeaderHeight(id) {
   var list = [];
@@ -658,7 +674,7 @@ function syncGroupHeaderHeight(id) {
             if ($(li).hasClass('header')) {
               var t = $(li).data('pos')
               $(li).data('pos', hi)
-              //console.log(li, 'from', t, $(li).data('pos'))              
+              //console.log(li, 'from', t, $(li).data('pos'))
             }
             hi = hi + 45
           }
@@ -667,9 +683,7 @@ function syncGroupHeaderHeight(id) {
     }
   })
 }
-// $canv.css({width: "200px!important", height: "200px!important"})   
 
-// Chart.defaults.global.defaultFontSize = '25';
 
 function insertBar(elm, a, b) {
   var h = a > b ? a : b,
@@ -736,10 +750,10 @@ function insertBar(elm, a, b) {
             max: h,
             min: 0,
             stepSize: step,
-            //max: h,            
+
             fontSize: fSize,
             padding: padd,
-            // callback: function(value) {return value.toLocaleString()},
+
             userCallback: function (label, index, labels) {
               if (Math.floor(label) === label) {
                 return label.toLocaleString();
@@ -750,7 +764,7 @@ function insertBar(elm, a, b) {
         }],
         xAxes: [{
           display: false,
-          // barThickness : barWidth,          
+
           categoryPercentage: categoryPercentage,
           barPercentage: barPercentage,
         }]
@@ -760,15 +774,13 @@ function insertBar(elm, a, b) {
       },
       tooltips: {
         enabled: false,
-        // bodyFontSize: 80,        
-        // xPadding: 12,      
-        // yPadding: 12      
+
       },
       hover: { mode: null },
       scaleLabel: function (label) {
         return Number(label.value).toFixed(2).replace('.', ',');
       },
-      // tooltipTemplate: "<%= datasetLabel %> - <%= value.toLocaleString() %>",
+
     }
   });
 
@@ -779,29 +791,26 @@ function btnItemListener() {
     var target = $(e.target).closest('tr').find('td.btn-item').eq(0)
     target1 = $(target),
       target2 = target1.find('canvas')
-    // console.log(target)
+
     if (target2.length > 0) {
       var a = target1.data('first'),
         b = target1.data('second')
       target2.eq(0).css({ 'display': 'block' })
-      // target2.eq(0).off('mouseover').on('mouseover', function (el) {
+
       var v = $(e.target).closest('tr').find('.sub-vals')
       if (v.length > 0) {
         if (!v.eq(0).hasClass('on')) {
           v.eq(0).addClass('on')
         }
       }
-      //   //$(el.target).css({'width': "200px!important", 'height': "200px!important"})
-      // })
+
       insertBar(target2[0], a, b)
     }
   })
 
   var start = (function () {
     $('canvas').hide()
-    // Chart.defaults.global.tooltips = {
-    //   titleFontSize: 12
-    // }
+
   })()
 }
 
@@ -828,4 +837,3 @@ $(function () {
     scroller()
   });
 });
-
