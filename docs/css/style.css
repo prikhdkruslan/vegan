@@ -1,8 +1,27 @@
+
+img {
+  image-rendering: -moz-crisp-edges; /* Firefox */
+
+  image-rendering: -o-crisp-edges; /* Opera */
+
+  image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+
+  image-rendering: crisp-edges;
+
+  -ms-interpolation-mode: nearest-neighbor;
+
+}
+
+.clearfix::after {
+  content: " ";
+  clear: both;
+  display: block;
+}
 *{
   padding : 0;
   margin : 0;
 }
-body{  
+body{
   overflow-y: hidden;
 }
 
@@ -13,7 +32,7 @@ body{
   background-color: #173;
   overflow: hidden;
   text-align: center;
-  
+
 }
 
 
@@ -100,7 +119,7 @@ button.navbar-toggle span.icon-bar {
     transition: all .5s linear;
 }
 
-.sub-vals.on {    
+.sub-vals.on {
     top: 5px;
     opacity: 1;
 }
@@ -108,7 +127,7 @@ button.navbar-toggle span.icon-bar {
 .footer-bottom {
     background-color: rgb(55, 78, 16);
     min-height: 30px;
-    width: 100%;    
+    width: 100%;
     position: absolute;
 }
 
@@ -127,7 +146,7 @@ button.navbar-toggle span.icon-bar {
     line-height: 30px;
     min-height: 30px;
     padding: 7px 0;
-    text-align: right;    
+    text-align: right;
 }
 .design a {
     color: #000;
@@ -137,8 +156,8 @@ button.navbar-toggle span.icon-bar {
     color: #fff;
 }
 
-canvas {  
-  margin: 12px 0 -10px 25px;  
+canvas {
+  margin: 12px 0 -10px 25px;
   user-select: none;
   /*width: 150px!important;
   height: 150px!important;    */
@@ -191,7 +210,7 @@ tbody tr{
   display: inline;
   background: transparent;
 }
- 
+
 
 /* Hide AddToAny vertical share bar when screen is less than 980 pixels wide */
 @media screen and (max-width: 980px) {
@@ -202,25 +221,25 @@ tbody tr{
 .ui.multiple.selection.dropdown .menu.sub {
   overflow-x: visible!important;
   overflow-y: auto;
-  
+
 
 }
 
 .ui.segment {
   margin-top: 10px!important;
-  display: none;        
-  /*background: rgba(255, 255, 255, .5)!important;*/  
+  display: none;
+  /*background: rgba(255, 255, 255, .5)!important;*/
   -webkit-transition: all .2s linear;
   -moz-transition: all .2s linear;
   transition: all .2s linear;
 }
 
 .ui.segment:not(.ads) {
-  overflow-x: scroll;  
+  overflow-x: scroll;
 }
 
 .ui.segment {
-  max-width: 94vw;  
+  max-width: 94vw;
 }
 
 element {
@@ -261,22 +280,22 @@ element {
   margin-left: 27vw;
 }
 
-#main-container{ 
+#main-container{
   /*display: flex; */
-  flex-direction:column;    
+  flex-direction:column;
   align-items: center;
   justify-content: center;
   margin-top: 51px;
 
-  background: url("../images/farm.jpg") no-repeat center!important;  
+  background: url("../images/farm.jpg") no-repeat center!important;
   background-size: auto auto;
   background-size: cover;
   position: relative;
   width: 100vw;
   height: 100px;
   align-self: center;
-  background-attachment: fixed;    
-  height: 100vh;  
+  background-attachment: fixed;
+  height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
 
@@ -297,7 +316,7 @@ element {
   align-self: center;
   display: flex;
 }
-.result {  
+.result {
   display: none;
   flex-direction: column;
   align-items: center;
@@ -326,12 +345,12 @@ element {
   flex-direction: column;
 }*/
 
-.box-1{        
+.box-1{
     text-align: center;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-self: center;    
+    align-self: center;
 }
 
 .ui.form {
@@ -342,11 +361,10 @@ element {
     box-shadow: 7px 5px 3px rgba(50, 100, 50, .8);
     flex: 1;
     margin: 0 30px!important;
-    margin-top: -51px!important;
 }
 
 .result {
-  padding-top: 25px;  
+  padding-top: 25px;
   flex: 1;
 }
 
@@ -360,7 +378,7 @@ element {
 }
 
 .ui.segment>table th>i {
-    margin-right: 15px;    
+    margin-right: 15px;
 }
 
 .ui.segment>table {
@@ -368,8 +386,8 @@ element {
 }
 
 .ui.segment>table tbody {
-    padding: 2em 2em;    
-    width: 100%;   
+    padding: 2em 2em;
+    width: 100%;
 }
 
 .ui.form .field {
@@ -381,7 +399,7 @@ element {
 }
 
 .ui.form .field>label {
-    color: rgba(255, 255, 255, 0.87)!important;    
+    color: rgba(255, 255, 255, 0.87)!important;
 }
 
 .vals {
@@ -403,19 +421,19 @@ element {
       width: 19px;
       height: 19px!important;
   }
-  .ui.segment>table th {  
-    padding: 18px 10px;  
+  .ui.segment>table th {
+    padding: 18px 10px;
     font-size: 1em;
   }
 
   .ui.segment>table th>i {
-      margin-right: 15px;    
+      margin-right: 15px;
   }
 
   .ui.segment>table {
     font-size: 1em;
   }
-  
+
   .ui.form .field {
       font-size: 1em;
   }
@@ -444,11 +462,11 @@ element {
 @media only screen and (min-width: 992px){
   .ui.search.dropdown .menu {
       max-height: 25rem!important;
-  }    
+  }
 }
 @media only screen and (min-width: 768px){
   .ui.search.dropdown .menu {
-    max-height: 25rem!important;  
+    max-height: 25rem!important;
   }
 }
 
@@ -471,18 +489,18 @@ element {
   .col-lg-12 {
     /*margin-left: calc(-4vw);
     margin-right: calc(10vw);*/
-  }  
+  }
   .ui.segment:not(.ads) {
-    min-width: 94vw;    
+    min-width: 94vw;
     margin-left: auto !important;
-    margin-right: auto !important;    
+    margin-right: auto !important;
   }
 }
 
 @media screen and (max-width: 320px) {
   .col-lg-12 {
     /*margin-left: calc(-9vw);    */
-  }  
+  }
 }
 
 
@@ -498,12 +516,12 @@ element {
 
 .calculator-instruction {
   padding-top: 30px;
-  padding-bottom: 30px; 
+  padding-bottom: 30px;
 }
 
 .m-a-0 {
   margin: 0px !important;
 }
 .m-b-20 {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
